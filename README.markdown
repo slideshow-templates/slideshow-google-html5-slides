@@ -11,20 +11,20 @@ see the [Slide Show (S9) Tutorial](http://slideshow.rubyforge.org/tutorial.html5
 
 If you want to try it yourself, install (fetch) the new template. Issue the command:
 
-  $ slideshow -f http://github.com/geraldb/slideshow-google-html5-slides/raw/master/g5.txt
+    $ slideshow -f http://github.com/geraldb/slideshow-google-html5-slides/raw/master/g5.txt
 
 To check if the new templated got installed, use the `-l/--list` switch/command:
 
-  $ slideshow -l
+    $ slideshow -l
 
 Listing something like:
 
-  Installed templates include:
-     g5.txt (/home/gerald/.slideshow/templates/g5/g5.txt)
+    Installed templates include:
+       g5.txt (/home/gerald/.slideshow/templates/g5/g5.txt)
 
 Now you're ready to use it using the `-t/--template` switch. Example:
 
-  $ slideshow -t g5.txt tutorial
+    $ slideshow -t g5.txt tutorial
 
 That's it. 
 
