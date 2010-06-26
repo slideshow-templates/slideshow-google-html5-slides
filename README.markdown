@@ -1,7 +1,7 @@
 
 ## Slide Show (S9) Template Pack - Google HTML5 Rocks
 
-Google's [html5-slides](http://code.google.com/p/html5-slides) code wrapped-up into a Slide Show (S9) template pack.
+Google's [html5-slides](http://code.google.com/p/html5-slides) code bundled into a Slide Show (S9) template pack.
 
 See the original [HTML5 Rocks](http://slides.html5rocks.com) slides in action or
 see the [Slide Show (S9) Tutorial](http://slideshow.rubyforge.org/tutorial.html5.html) slides generated using this template pack.
