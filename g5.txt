@@ -7,3 +7,44 @@
 
 
 __file__.html5.html   html5.html.erb
+
+
+# scripts
+
+js/excss.js
+js/utils.js
+
+# styles
+
+styles/common.css
+styles/default.css
+styles/fonts.css
+styles/moon.css
+styles/presentation.css
+styles/sand.css
+styles/sea_wave.css
+
+# 3rd party sources
+
+src/gray_lines_bg.png
+src/opacity_bg.jpg
+src/zippy-plus.png
+
+src/prettify/lang-apollo.js
+src/prettify/lang-css.js
+src/prettify/lang-hs.js
+src/prettify/lang-lisp.js
+src/prettify/lang-lua.js
+src/prettify/lang-ml.js
+src/prettify/lang-proto.js
+src/prettify/lang-scala.js
+src/prettify/lang-sql.js
+src/prettify/lang-vb.js
+src/prettify/lang-vhdl.js
+src/prettify/lang-wiki.js
+src/prettify/lang-yaml.js
+src/prettify/prettify.css
+src/prettify/prettify.js
+
+src/fonts/inconsolata/Inconsolata.ttf
+src/fonts/yanone/YanoneKaffeesatz-Regular.ttf
