@@ -83,10 +83,12 @@ a {
   line-height: 110%;
   border-bottom: 2px solid #3f3f3f;
 }
-li {
+/* GB: li with bullets default (like in html)
+  li {
   list-style: none;
   padding: 10px 0;
-}
+}*/
+
 button {
   font-family: Verdana;
   font-size: 20px;
@@ -118,12 +120,16 @@ pre input[type="range"] {
   cursor: pointer;
   width: auto;
 }
+
+/* GB: li with bullets default (like in html)
 .bullets {
   font-size: 40px;
 }
 .bullets li::before {
   content: '· ';
 }
+*/
+
 section.left {
   float: left;
   width: 390px;

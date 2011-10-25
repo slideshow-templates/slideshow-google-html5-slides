@@ -540,9 +540,7 @@ if (!Function.prototype.bind) {
   var li_array = [];
   var transitionSlides = queryAll('.transitionSlide').forEach(function(el) {
     li_array.push( ['<li><a data-hash="', el.id, '">',
-                    query('h2', el).textContent, '</a><img src="',
-                    query('img', el).src.replace(/64/g, '32'),
-                    '"/></li>'].join('')
+                    query('h1', el).textContent, '</a></li>'].join('')
                  );
   });
 

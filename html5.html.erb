@@ -27,8 +27,24 @@
   o removed google analytics script code
   o removed google maps script code
   o removed all slides
--->
 
+  o in js/utils.js changed line 541pp queryAll('.transitionSlide')
+ 
+     - looks for h1 (not h2) and doesn't include img (icon)
+
+  o in styles/commons.css commented out rules for li and bullets
+ 
+   li {
+    list-style: none;
+    padding: 10px 0;
+   }
+   .bullets {
+  font-size: 40px;
+  }
+  .bullets li::before {
+    content: '· ';
+  }
+-->
 
 <html>
   <head>
@@ -112,7 +128,7 @@
 
 
         <% @slides.each_with_index do |slide,i| %>
-        <div class="slide" id="<%= (i+2).to_s %>">
+        <div class="slide transitionSlide" id="<%= %Q(slide#{i+2}) %>">
           <header><%= slide.header %></header>
           <section>
               <%= slide.content %>
