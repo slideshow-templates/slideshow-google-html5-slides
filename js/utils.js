@@ -539,11 +539,11 @@ if (!Function.prototype.bind) {
   // Initialize
   var li_array = [];
   var transitionSlides = queryAll('.transitionSlide').forEach(function(el) {
+    var h1 = query('h1', el);
+    if (!h1) {
+      return;
+    }
     li_array.push( ['<li><a data-hash="', el.id, '">',
-      var h1 = query('h1', el);
-      if (!h1) {
-        return;
-      }
                     query('h1', el).textContent, '</a></li>'].join('')
                  );
   });
