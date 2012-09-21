@@ -23,3 +23,30 @@ Copied Files from -> to:
     trunk/template/images/example-graph.jpg -> io2011/images/example-graph.jpg
 
 
+### slides.html.erb Changes
+
+Change
+
+    <script src='http://html5slides.googlecode.com/svn/trunk/slides.js'></script>
+
+to
+
+    <script src='js/slides.js'></script>
+
+
+Change
+
+    <title>Presentation</title>
+
+to
+
+    <title><%= @headers['title'] %></title>
+
+
+### js/slides.js Changes
+
+Change
+
+    var PERMANENT_URL_PREFIX = 'http://html5slides.googlecode.com/svn/trunk/';
+
+TBD
