@@ -1,6 +1,6 @@
 # Slide Show (S9) Template Pack - Google HTML5 Rocks
 
-Google's [HTML5 Rocks Slides](http://code.google.com/p/html5rocks) code
+Google's [HTML5 Rocks Slides](https://github.com/html5rocks/www.html5rocks.com) code
 bundled up into a Slide Show (S9) template pack (includes Moon, Sand and Sea Wave themes).
 
 See the original [HTML5 Rocks](http://slides.html5rocks.com) slides in action.
