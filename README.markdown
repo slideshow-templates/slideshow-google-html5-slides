@@ -15,7 +15,7 @@ Note, the package is configured to use the following headers in `html5.html.erb`
 
 If you want to try it yourself, install (fetch) the new template pack. Issue the command:
 
-    $ slideshow -f https://github.com/geraldb/slideshow-google-html5-slides/raw/master/g5.txt
+    $ slideshow -f https://raw.github.com/slideshow-s9/slideshow-google-html5-slides/master/g5.txt
 
 To check if the new template got installed, use the `-l/--list` switch/command:
 
@@ -43,4 +43,4 @@ Thanks!
 
 A Ruby gem that lets you create slide shows and author slides in plain text
 using a wiki-style markup language that's easy-to-write and easy-to-read.
-More [Slide Show (S9) Project Site &raquo;](http://slideshow.rubyforge.org)
+More [Slide Show (S9) Project Site »](http://slideshow-s9.github.io)
