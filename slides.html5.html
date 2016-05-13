@@ -1,3 +1,11 @@
+---
+---
+
+{% if jekyll %}
+  {% assign headers   = site.headers %}
+  {% assign slides    = site.slides %}
+{% endif %}
+
 <!DOCTYPE html>
 <!--
   Copyright 2011 Google Inc.
@@ -21,7 +29,7 @@
 -->
 
 <!-- GB: modifications for s9 template pack:
- 
+
   o removed offline manifest
   o removed disclaimer; it's just a prototype anyway
   o removed google analytics script code
@@ -29,11 +37,11 @@
   o removed all slides
 
   o in js/utils.js changed line 541pp queryAll('.transitionSlide')
- 
+
      - looks for h1 (not h2) and doesn't include img (icon)
 
   o in styles/commons.css commented out rules for li and bullets
- 
+
    li {
     list-style: none;
     padding: 10px 0;
@@ -50,7 +58,7 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1" />
-    <title><%= @headers['title'] %></title>
+    <title>{{ headers['title'] }}</title>
     <link href="http://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans+Mono" rel="stylesheet" type="text/css" />
     <link id="prettify-link" href="src/prettify/prettify.css" rel="stylesheet" disabled />
     <link href="styles/fonts.css" rel="stylesheet" type="text/css" media="screen" />
@@ -64,8 +72,8 @@
   <body>
     <div id="flex-container">
     <nav id="helpers">
-      <button title="Previous slide" id="nav-prev" class="nav-prev">&#8701;</button> 
-      <button title="Jump to a random slide" id="slide-no">5</button> 
+      <button title="Previous slide" id="nav-prev" class="nav-prev">&#8701;</button>
+      <button title="Jump to a random slide" id="slide-no">5</button>
       <button title="Next slide" id="nav-next" class="nav-next">&#8702;</button>
       <menu>
         <button type="checkbox" data-command="toc" title="Table of Contents" class="toc">TOC</button>
@@ -86,7 +94,7 @@
             <section>
               Welcome! (This field is for speaker notes and commentary.)
             </section>
-          </aside> 
+          </aside>
         </div>
 
         <div class="slide" id="controls-slide">
@@ -109,10 +117,10 @@
           <section class="middle">
             <hgroup>
               <h1>
-                <%= @headers['title'] %>
+                {{ headers['title'] }}
               </h1>
               <h2>
-                <%= @headers['subtitle'] %>
+                {{ headers['subtitle'] }}
               </h2>
             </hgroup>
           </section>
@@ -127,14 +135,23 @@
         </div>
 
 
-        <% @slides.each_with_index do |slide,i| %>
-        <div class="slide transitionSlide" id="<%= %Q(slide#{i+2}) %>">
-          <header><%= slide.header %></header>
+{% for slide in slides %}
+
+{% if jekyll %}
+  {% capture slide_header %}<h1>{{slide.title}}</h1>{% endcapture %}
+  {% assign slide_content_without_header = slide.content %}
+{% else %}
+  {% capture slide_header %}{{ slide.header }}{% endcapture %}
+  {% capture slide_content_without_header %}{{ slide.content_without_header }}{% endcapture %}
+{% endif %}
+
+        <div class="slide transitionSlide" id="slide{{ forloop.index }}"><div>  <!-- fix: add +2 or +1 was: (i+2).to_s -->
+          <header>{{ slide_header }}</header>
           <section>
-              <%= slide.content_without_header %>
+              {{ slide_content_without_header }}
           </section>
         </div>
-        <% end %>
+{% endfor %}
 
 
         <div id="speaker-note" class="invisible" style="display: none;"></div>
@@ -176,9 +193,9 @@
 
     </div> <!-- slides -->
     </div>
-    
+
     <!--[if lt IE 9]>
-    <script 
+    <script
       src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">
     </script>
     <script>CFInstall.check({ mode: "overlay" });</script>
