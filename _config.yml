@@ -2,7 +2,7 @@
 #  GitHub Pages / Jekyll settings / config
 
 headers:
-  title:     Slide Show (S9) 10-Minute Tutorial
+  title:     Slide Show (S9)
   subtitle:  "Write Your Talks in Plain Text w/ Markdown"
   author:    Gerald Bauer et al
   generator: GitHub Pages w/ Jekyll
