@@ -1,12 +1,13 @@
+##############################################
 # Slide Show (S9) Template Pack Manifest
 #
 # Change as desired/needed
 #
 # Questions? Comments?
-# Send them along to the Forum/Mailing List @ http://groups.google.com/group/webslideshow
+# Send them along to the wwwmake forum/mailing List @ http://groups.google.com/group/wwwmake
 
 
-__file__.html5.html   html5.html.erb
+__file__.html5.html   slides.html5.html
 
 
 # scripts
