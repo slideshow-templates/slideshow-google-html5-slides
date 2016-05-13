@@ -145,7 +145,7 @@
   {% capture slide_content_without_header %}{{ slide.content_without_header }}{% endcapture %}
 {% endif %}
 
-        <div class="slide transitionSlide" id="slide{{ forloop.index }}"><div>  <!-- fix: add +2 or +1 was: (i+2).to_s -->
+        <div class="slide transitionSlide" id="slide{{ forloop.index }}">  <!-- fix: add +2 or +1 was: (i+2).to_s -->
           <header>{{ slide_header }}</header>
           <section>
               {{ slide_content_without_header }}
