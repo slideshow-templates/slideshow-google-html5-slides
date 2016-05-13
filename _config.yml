@@ -1,0 +1,17 @@
+#####
+#  GitHub Pages / Jekyll settings / config
+
+headers:
+  title:     Slide Show (S9) 10-Minute Tutorial
+  author:    Gerald Bauer et al
+  generator: GitHub Pages w/ Jekyll
+
+collections:
+  slides:
+    output: false
+
+
+exclude:
+- README.md
+- NOTES.md
+- g5.txt
