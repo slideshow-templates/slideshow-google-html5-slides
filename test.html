@@ -1,16 +1,8 @@
----
----
-
-{% if jekyll %}
-  {% assign headers = site.headers %}
-  {% assign slides  = site.slides %}
-{% endif %}
-
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
-    <title>{{ headers['title'] }}</title>
+    <title>Test Title Here</title>
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans+Mono">
     <link rel="stylesheet" href="src/prettify/prettify.css" id="prettify-link" disabled>
     <link rel="stylesheet" href="styles/fonts.css"        media="screen">
@@ -72,10 +64,10 @@
           <section class="middle">
             <hgroup>
               <h1>
-                {{ headers['title'] }}
+                Test Title Here (w/ Heading 1)
               </h1>
               <h2>
-                {{ headers['subtitle'] }}
+                Test Subtitle Here (w/ Heading 2)
               </h2>
             </hgroup>
           </section>
@@ -90,23 +82,45 @@
         </div>
 
 
-{% for slide in slides %}
-
-{% if jekyll %}
-  {% capture slide_header %}<h1>{{slide.title}}</h1>{% endcapture %}
-  {% assign slide_content_without_header = slide.content %}
-{% else %}
-  {% capture slide_header %}{{ slide.header }}{% endcapture %}
-  {% capture slide_content_without_header %}{{ slide.content_without_header }}{% endcapture %}
-{% endif %}
-
-        <div class="slide transitionSlide" id="slide{{ forloop.index }}">  <!-- fix: add +2 or +1 was: (i+2).to_s -->
-          <header>{{ slide_header }}</header>
+         <!-- some test slides -->
+        <div class="slide transitionSlide" id="slide3">
+          <header><h1>Heading 1</h1></header>
           <section>
-              {{ slide_content_without_header }}
+              <p>Some text here</p>
           </section>
         </div>
-{% endfor %}
+
+        <div class="slide transitionSlide" id="slide4">
+          <header>Just text in header</header>
+          <section>
+              <p>Some text here</p>
+          </section>
+        </div>
+
+        <div class="slide transitionSlide" id="slide5">
+          <section>
+              <p>Some text here (No header)</p>
+          </section>
+        </div>
+
+        <div class="slide transitionSlide" id="slide6">
+          <header><h1>Heading 1</h1>
+                  <h2>Heading 2</h2>
+          </header>
+          <section>
+              <p>Some text here (No header)</p>
+          </section>
+        </div>
+
+        <div class="slide transitionSlide" id="slide7">
+          <section>
+              <p>Some text here (No header)</p>
+              <h1>Heading 1</h1>
+              <h2>Heading 2</h2>
+              <h3>Heading 3</h3>
+          </section>
+        </div>
+
 
 
         <div id="speaker-note" class="invisible" style="display: none;"></div>

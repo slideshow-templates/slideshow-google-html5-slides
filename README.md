@@ -4,6 +4,8 @@
 
 See [`slides.html5.html`](http://slideshow-templates.github.io/slideshow-google-html5-slides/slides.html5.html).
 
+For testing see [`test.html`](http://slideshow-templates.github.io/slideshow-google-html5-slides/test.html).
+
 
 ## What's Slide Show (S9)?
 
