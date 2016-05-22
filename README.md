@@ -13,7 +13,7 @@ More [Slide Show (S9) Project Site »](http://slideshow-s9.github.io)
 
 ## Intro
 
-Google's [HTML5 Rocks Slides](https://github.com/html5rocks/www.html5rocks.com) code
+Google's [HTML5 Rocks Slides](https://github.com/html5rocks/slides.html5rocks.com) code
 bundled up into a Slide Show (S9) template pack (includes Moon, Sand and Sea Wave themes).
 
 <!--

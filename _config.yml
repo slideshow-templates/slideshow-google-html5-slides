@@ -13,8 +13,11 @@ collections:
 
 
 exclude:
+- attic
 - README.md
-- NOTES.md
+- QUICKREF.md
+- BUILD.md
+- LICENSE.g5.txt
 - package.json
 - g5.txt
 - io2011

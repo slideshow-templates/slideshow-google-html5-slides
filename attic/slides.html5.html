@@ -2,14 +2,62 @@
 ---
 
 {% if jekyll %}
-  {% assign headers = site.headers %}
-  {% assign slides  = site.slides %}
+  {% assign headers   = site.headers %}
+  {% assign slides    = site.slides %}
 {% endif %}
 
 <!DOCTYPE html>
+<!--
+  Copyright 2011 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+  Original slides: Marcin Wichary (mwichary@google.com)
+  Modifications: Chrome DevRel Team (chrome-devrel@googlegroups.com)
+                 Alex Russell (slightlyoff@chromium.org)
+                 Brad Neuberg
+-->
+
+<!-- GB: modifications for s9 template pack:
+
+  o removed offline manifest
+  o removed disclaimer; it's just a prototype anyway
+  o removed google analytics script code
+  o removed google maps script code
+  o removed all slides
+
+  o in js/utils.js changed line 541pp queryAll('.transitionSlide')
+
+     - looks for h1 (not h2) and doesn't include img (icon)
+
+  o in styles/commons.css commented out rules for li and bullets
+
+   li {
+    list-style: none;
+    padding: 10px 0;
+   }
+   .bullets {
+  font-size: 40px;
+  }
+  .bullets li::before {
+    content: '· ';
+  }
+-->
+
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1" />
     <title>{{ headers['title'] }}</title>
     <link href="http://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans+Mono" rel="stylesheet" type="text/css" />
     <link id="prettify-link" href="src/prettify/prettify.css" rel="stylesheet" disabled />
@@ -146,12 +194,14 @@
     </div> <!-- slides -->
     </div>
 
+    <!--[if lt IE 9]>
+    <script
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">
+    </script>
+    <script>CFInstall.check({ mode: "overlay" });</script>
+    <![endif]-->
 
     <script src="src/prettify/prettify.js" onload="prettyPrint();" defer></script>
-
     <script src="js/utils.js"></script>
-    <script src="js/slide.js"></script>
-    <script src="js/slideshow.js"></script>
-    <script src="js/start.js"></script>
   </body>
 </html>

@@ -12,8 +12,11 @@ __file__.html5.html   slides.html5.html
 
 # scripts
 
-js/excss.js
+js/slide.js
+js/slideshow.js
+js/start.js
 js/utils.js
+
 
 # styles
 
