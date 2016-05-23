@@ -133,51 +133,6 @@ saveButton.addEventListener('click', function () {
 }, false);
 textarea.value = window.<b>localStorage</b>.<b>getItem</b>('value');
 </pre>
-            <p id="localstorage-message">Save text value on the client side (crash-safe)</p>
-            <textarea id="ta" placeholder="Type your text here..."></textarea>
-            <button id="save-ta">Save</button>
-            <p id="ta-log"></p>
-            <script defer>
-              (function(){
-
-                try {
-                  (window.localStorage.getItem) // will throw in Firefox under some settings
-                } catch(e){
-                  return; // quit because dom.storage.enabled is false
-                }
-
-                var area = document.querySelector('#ta');
-                // place content from previous edit
-                if (!area.value) {
-                  area.value = window.localStorage.getItem('value');
-                }
-                updateLog(false);
-
-                // your content will be saved locally
-                document.querySelector('#save-ta').addEventListener('click', function () {
-                  window.localStorage.setItem('value', area.value);
-                  window.localStorage.setItem('timestamp', (new Date()).getTime());
-                  updateLog(true);
-                }, false);
-
-                function updateLog(new_save) {
-                  var log = document.querySelector("#ta-log");
-                  var delta = 0;
-                  if (window.localStorage.getItem('value')) {
-                    delta = ((new Date()).getTime() - (new Date()).setTime(window.localStorage.getItem('timestamp'))) / 1000;
-                    if (new_save) {
-                      log.textContent = 'Saved. Content will be available after browser refresh/reopen.';
-                      setTimeout(function() {
-                        log.textContent = '';
-                      }, 3000);
-                    } else {
-                      log.textContent = 'last saved: ' + delta + 's ago';
-                    }
-                  }
-                }
-
-              })();
-            </script>
           </section>
         </div>
 
@@ -190,97 +145,6 @@ db.<b>transaction</b>(function(tx) {
 });
 </pre>
 
-          <div class="center" id="websqldb-example">
-            <input type="text" id="todoitem" />
-            <button onclick="webSqlSample.newRecord()">new to do item</button>
-            <button onclick="webSqlSample.createTable()">create table</button>
-            <button onclick="webSqlSample.dropTable()">drop table</button>
-            <p>See the generated database: Developer > Developer Tools > Storage</p>
-            <ul class="record-list" id="db-results"></ul>
-            <div id="db-log"></div>
-          </div>
-          <script defer>
-            var webSqlSample = (function() {
-              var db;
-              var log = document.getElementById('db-log');
-              if (window.openDatabase) {
-                db = openDatabase("DBTest", "1.0", "HTML5 Database API example", 200000);
-                showRecords();
-              }
-              document.getElementById('db-results').addEventListener('click', function(e) { e.preventDefault(); }, false);
-
-              function onError(tx, error) {
-                log.innerHTML = '<p class="error">Error: ' + error.message + '</p>';
-              }
-
-              // select all records and display them
-              function showRecords() {
-                document.getElementById('db-results').innerHTML = '';
-                db.transaction(function(tx) {
-                  tx.executeSql("SELECT * FROM Table1Test", [], function(tx, result) {
-                    for (var i = 0, item = null; i < result.rows.length; i++) {
-                      item = result.rows.item(i);
-                      document.getElementById('db-results').innerHTML +=
-                          '<li><span contenteditable="true" onkeyup="webSqlSample.updateRecord('+item['id']+', this)">'+
-                          item['text'] + '</span> <a href="#" onclick="webSqlSample.deleteRecord('+item['id']+')">[Delete]</a></li>';
-                    }
-                  });
-                });
-              }
-
-              function createTable() {
-                db.transaction(function(tx) {
-                  tx.executeSql("CREATE TABLE Table1Test (id REAL UNIQUE, text TEXT)", [],
-                      function(tx) {  log.innerHTML = '<p>"Table1Test" created!</p>' },
-                      onError);
-                });
-              }
-
-              // add record with random values
-              function newRecord() {
-                var num = Math.round(Math.random() * 10000); // random data
-                db.transaction(function(tx) {
-                  tx.executeSql("INSERT INTO Table1Test (id, text) VALUES (?, ?)", [num, document.querySelector('#todoitem').value],
-                      function(tx, result) {
-                        log.innerHTML = '';
-                        showRecords();
-                      },
-                      onError);
-                });
-              }
-
-              function updateRecord(id, textEl) {
-                db.transaction(function(tx) {
-                  tx.executeSql("UPDATE Table1Test SET text = ? WHERE id = ?", [textEl.innerHTML, id], null, onError);
-                });
-              }
-
-              function deleteRecord(id) {
-                db.transaction(function(tx) {
-                  tx.executeSql("DELETE FROM Table1Test WHERE id=?", [id],
-                      function(tx, result) { showRecords() },
-                      onError);
-                });
-              }
-
-              // delete table from db
-              function dropTable() {
-                db.transaction(function(tx) {
-                  tx.executeSql("DROP TABLE Table1Test", [],
-                      function(tx) { showRecords() },
-                      onError);
-                });
-              }
-
-              return {
-                newRecord: newRecord,
-                createTable: createTable,
-                updateRecord: updateRecord,
-                deleteRecord: deleteRecord,
-                dropTable: dropTable
-              }
-            })();
-          </script>
         </section>
       </div>
 
@@ -295,205 +159,6 @@ idbRequest.onsuccess = function(event) {
   curRequest.<b>onsuccess</b> = ...;
 };
 </pre>
-          <div class="center" id="indexeddb-example">
-            <input type="text" placeholder="key" id="idb-key" size="10" /> <input type="text" placeholder="value" id="idb-value" size="15" />
-            <button onclick="indexedDbSample.idbSet()">set</button>
-            <button onclick="indexedDbSample.idbCreate()">create objectStore</button>
-            <button onclick="indexedDbSample.idbRemove()">remove objectStore</button>
-            <div id="idb-log"></div>
-            <div class="record-list" id="idb-results-wrapper"></div>
-          </div>
-          <script defer>
-            var indexedDbSample = (function() {
-              var idb_;
-              var idbRequest_;
-              var idbLog_ = document.getElementById('idb-log');
-              var idResultsWrapper_ = document.getElementById('idb-results-wrapper');
-
-              // IndexedDB spec is still evolving, various browsers keep it
-              // behind various flags and implementation varies.
-              if ('webkitIndexedDB' in window) {
-                window.indexedDB = window.webkitIndexedDB;
-                window.IDBTransaction = window.webkitIDBTransaction;
-              } else if ('moz_indexedDB' in window) {
-                window.indexedDB = window.moz_indexedDB;
-              }
-
-              // Open our IndexedDB if the browser supports it.
-              if (window.indexedDB) {
-                idbRequest_ = window.indexedDB.open("Test", "A test object store.");
-                idbRequest_.onerror = idbError_;
-                idbRequest_.addEventListener('success', function(event) {
-                  idb_ = event.srcElement.result;
-                  idbShow_(event);
-                }, false);
-              }
-
-              function idbError_(event) {
-                idbLog_.innerHTML += '<p class="error">Error: ' +
-                                     event.message + ' (' + event.code + ')</p>';
-              }
-
-              function idbShow_(event) {
-                if (!idb_.objectStoreNames.contains('myObjectStore')) {
-                  idbLog_.innerHTML = "<p>Object store not yet created.</p>";
-                  return;
-                }
-
-                var html = [];
-                var transaction = idb_.transaction([], IDBTransaction.READ_ONLY); // Read is default.
-                var request = transaction.objectStore('myObjectStore').openCursor(); // Get all results.
-
-                // This callback will continue to be called until we have no more results.
-                request.onsuccess = function(e) {
-                  var cursor = e.srcElement.result;
-                  if (!cursor) {
-                    idResultsWrapper_.innerHTML = '<ul class="record-list" id="idb-results">' + html.join('') + '</ul>';
-                    return;
-                  }
-                  html.push('<li><span class="keyval" contenteditable onblur="indexedDbSample.updateKey(\'',
-                            cursor.key, '\', this)">', cursor.key, '</span> ',
-                            '=> <span class="keyval" contenteditable onblur="indexedDbSample.updateValue(\'',
-                            cursor.key, '\', this)">', cursor.value, '</span>&nbsp; ',
-                            '<a href="javascript:void(0)" onclick="indexedDbSample.deleteKey(\'',
-                            cursor.key, '\')">[Delete]</a></li>');
-                  cursor['continue']();
-                }
-                request.onerror = idbError_;
-              }
-
-              function idbCreate_() {
-                if (!idb_) {
-                  if (idbRequest_) {
-                    idbRequest_.addEventListener('success', removeObjectStore, false); // If indexedDB is still opening, just queue this up.
-                  }
-                  return;
-                }
-
-                var request = idb_.setVersion('the new version string');
-                request.onerror = idbError_;
-                request.onsuccess = function(e) {
-                  if (!idb_.objectStoreNames.contains('myObjectStore')) {
-                    try {
-                      var objectStore = idb_.createObjectStore('myObjectStore', null); // FF is requiring the 2nd keyPath arg. It can be optional :(
-                      idbLog_.innerHTML = "<p>Object store created.</p>";
-                    } catch (err) {
-                      idbLog_.innerHTML = '<p class="error">' + err.toString() + '</p>';
-                    }
-                  } else {
-                    idbLog_.innerHTML = '<p class="error">Object store already exists.</p>';
-                  }
-                }
-              }
-
-              function idbSet_() {
-                if (!idb_) {
-                  if (idbRequest_) {
-                    idbRequest_.addEventListener('success', removeObjectStore, false); // If indexedDB is still opening, just queue this up.
-                  }
-                  return;
-                }
-
-                if (!idb_.objectStoreNames.contains('myObjectStore')) {
-                  idbLog_.innerHTML = "<p class=\"error\">Object store doesn't exist.</p>";
-                  return;
-                }
-
-                 // Create a transaction that locks the world.
-                var objectStore = idb_.transaction([], IDBTransaction.READ_WRITE)
-                                      .objectStore("myObjectStore");
-                var request = objectStore.put(
-                    document.getElementById('idb-value').value,
-                    document.getElementById('idb-key').value);
-                request.onerror = idbError_;
-                request.onsuccess = idbShow_;
-              }
-
-              function updateKey_(key, element) {
-                var newKey = element.textContent;
-                var transaction = idb_.transaction([], IDBTransaction.READ_WRITE); // Create a transaction that locks the world.
-                var objectStore = transaction.objectStore("myObjectStore");
-                var request = objectStore.get(key);
-                request.onerror = idbError_;
-                request.onsuccess = function(event) {
-                  var value = event.srcElement.result;
-                  var request;
-                  if (objectStore['delete']) {
-                    request = objectStore['delete'](key);
-                  } else {
-                    request = objectStore.remove(key);
-                  }
-                  request.onerror = idbError_;
-                  request.onsuccess = function(event) {
-                    var request = objectStore.add(value, newKey);
-                    request.onerror = idbError_;
-                    request.onsuccess = idbShow_;
-                  };
-                };
-              }
-
-              function updateValue_(key, element) {
-                var transaction = idb_.transaction([], IDBTransaction.READ_WRITE); // Create a transaction that locks the world.
-                var objectStore = transaction.objectStore("myObjectStore");
-                var request = objectStore.put(element.textContent, key);
-                request.onerror = idbError_;
-                request.onsuccess = idbShow_;
-              }
-
-              function deleteKey_(key) {
-                var transaction = idb_.transaction([], IDBTransaction.READ_WRITE); // Create a transaction that locks the world.
-                var objectStore = transaction.objectStore("myObjectStore");
-                var request;
-                if (objectStore['delete']) {
-                  request = objectStore['delete'](key);
-                } else {
-                  request = objectStore.remove(key);
-                }
-                request.onerror = idbError_;
-                request.onsuccess = idbShow_;
-              }
-
-              function idbRemove_() {
-                if (!idb_) {
-                  if (idbRequest_) {
-                    idbRequest_.addEventListener('success', removeObjectStore, false); // If indexedDB is still opening, just queue this up.
-                  }
-                  return;
-                }
-
-                var request = idb_.setVersion("the new version string");
-                request.onerror = idbError_;
-                request.onsuccess = function(event) {
-
-                  if (idb_.objectStoreNames.contains('myObjectStore')) {
-                    try {
-                      // Spec has been updated to deleteObjectStore.
-                      if (idb_.deleteObjectStore) {
-                        idb_.deleteObjectStore('myObjectStore');
-                      } else {
-                        idb_.removeObjectStore('myObjectStore');
-                      }
-                      idResultsWrapper_.innerHTML = '';
-                      idbLog_.innerHTML = "<p>Object store removed.</p>";
-                    } catch (err) {
-                      idbLog_.innerHTML = '<p class="error">' + err.toString() + '</p>';
-                    }
-                  } else {
-                    idbLog_.innerHTML = "<p class=\"error\">Object store doesn't exist.</p>";
-                  }
-                };
-              }
-
-              return {
-                idbSet: idbSet_,
-                idbCreate: idbCreate_,
-                idbRemove: idbRemove_,
-                updateKey: updateKey_,
-                updateValue: updateValue_,
-                deleteKey: deleteKey_
-              }
-            })();
-          </script>
         </section>
       </div>
 
@@ -524,43 +189,11 @@ CACHE:
 NETWORK:
 *
 </pre>
-
-            <p id="appcache-message">Turn off your internet connection and refresh this page!
-              <img src="src/refresh.png" onclick="window.location.reload();"/></p>
           </section>
         </div>
 
         <div class="slide offline-storage" id="quota-api">
           <header><span class="js">JS</span> <h1>Quota API</h1></header>
-          <style>
-            #quota-api table {
-              width: 100%;
-              border-collapse: collapse;
-              margin-top: 40px;
-            }
-            #quota-api th {
-              font-weight: 600;
-              text-align: left;
-            }
-            #quota-api td,
-            #quota-api th {
-              border: 1px solid #222;
-              padding: 5px 10px;
-              vertical-align: top;
-            }
-            .quota-info-bubble {
-              background-color: #FCFCE4;
-              border: 1px solid yellow;
-              font-size: 80%;
-              padding: 5px;
-            }
-            .quota-info-bubble input, .quota-info-bubble button {
-              font-size: 12px;
-            }
-            .quota-info-bubble span {
-              display: block;
-            }
-          </style>
           <section>
     <pre style="font-size: 80%">
 // Request Status
@@ -574,41 +207,7 @@ NETWORK:
     console.log("Used quota: " + used + ", remaining quota: " + remaining);
   }
 );</pre>
-            <table border="0" cellspacing="5" cellpadding="5">
-              <tr><th></th><th>Default (Temporary)</th><th>Quota Requested (Persistent)</th></tr>
-              <tr><td>Web Storage</td><td>5Mb</td><td rowspan="4">N/A</td></tr>
-              <tr><td>App Cache</td><td rowspan="4">10% of available disk in total<div class="quota-info-bubble"><button id="temp-query">Show Usage</button><span>Used: <output>--</output> Bytes</span><span>Remaining: <output>--</output> Bytes</span></div></td></tr>
-              <tr><td>IndexedDB</td></tr>
-              <tr><td>WebSQL</td></tr>
-              <tr><td>File System API</td><td>Arbitrary<div class="quota-info-bubble"><input id="requested-quota" type="text" placeholder="Request quota amount..."/> in Bytes <button id="perm-request" style="margin-left: 5px">Request Quota</button><span>Used: <output>--</output> Bytes</span></div></td></tr>
-            </table>
           </section>
-          <script>
-            (function() {
-              var outputs = document.querySelectorAll('#quota-api output');
-              document.querySelector('#temp-query').addEventListener(
-                'click', function() {
-                  webkitStorageInfo.queryUsageAndQuota(
-                      webkitStorageInfo.TEMPORARY,
-                      function(used, remaining) {
-                        outputs[0].textContent = used;
-                        outputs[1].textContent = remaining;
-                      }, function(error) { alert(error) });
-
-                }, false);
-
-              document.querySelector('#perm-request').addEventListener(
-                'click', function() {
-                  webkitStorageInfo.requestQuota(
-                      webkitStorageInfo.PERSISTENT,
-                      document.querySelector('#requested-quota').value,
-                      function(used) {
-                        outputs[2].textContent = used;
-                      }, function(error) { alert(error) });
-
-                }, false);
-            }())
-          </script>
         </div>
 
         <div class="slide transitionSlide" id="realtime-title">
@@ -636,148 +235,7 @@ self.<b>onmessage</b> = function(event) {
   self.<b>postMessage</b>("recv'd: " + event.data);
 };
 </pre>
-
-        <div id="w-wrapper">
-          <div id="wmap" class="gmap example">
-            <img src="http://maps.google.com/maps/api/staticmap?center=13,13&zoom=3&size=680x200&sensor=false"/>
-          </div>
-          <div style="margin-top:5px">
-            <button id="find-route-y">Find route with Workers</button>
-            <button id="find-route-n">Find route without Workers</button>
-            <p id="w-loading">Loading Route...</p>
-          </div>
-          <p style="font-size: 90%;" class="center">Try dragging the map while the complex route is being calculated (you will only be able to do that with Workers!)</p>
-        </div>
-        <script src="src/webworkers/points.js" defer></script>
-        <script src="src/webworkers/annealing.js" defer></script>
-        <script defer>
-        (function() {
-          var markersArray = [];
-          var map = null;
-          var useThreads = false;
-
-          document.querySelector('#w-wrapper').addEventListener('click', function(event) {
-            if (!map) {
-              map = new google.maps.Map(document.querySelector('#wmap'), {
-                zoom: 3,
-                center: new google.maps.LatLng(13, 13),
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-              });
-              map.getDiv().style.border =  '1px solid #ccc';
-              drawPoints();
-            }
-
-            if (event.target.id == 'find-route-y') {
-              useThreads = true;
-              document.querySelector('#w-loading').style.visibility = 'visible';
-              test();
-            } else if (event.target.id == 'find-route-n'){
-              useThreads = false;
-              document.querySelector('#w-loading').style.visibility = 'visible';
-              // this setTimout is so that we see the 'loading' label
-              setTimeout(function() { test(); }, 10);
-            }
-          }, false);
-
-          function drawPath(path) {
-            var firstPoint = true;
-            var l = p1.length;
-            var scaleFactor = 5;
-            for (var i = 0; i < l - 1; ++i) {
-              var points = [
-                new google.maps.LatLng(p1[i].x / scaleFactor,
-                                       p1[i].y / scaleFactor),
-                new google.maps.LatLng(p1[i + 1].x / scaleFactor,
-                                       p1[i + 1].y / scaleFactor)
-              ];
-              var polyline = new google.maps.Polyline(
-                  {path: points, strokeColor: '#ff0000', strokeWeight: 1});
-              markersArray.push(polyline);
-              polyline.setMap(map);
-            }
-          }
-
-          function drawPoints() {
-            var blueIcon = new google.maps.MarkerImage(
-                'src/webworkers/point.png',
-                new google.maps.Size(3, 3), // size
-                new google.maps.Point(0, 0), // origin
-                new google.maps.Point(0, 0)); // anchor
-            for (var i = 0; i < p1.length; ++i) {
-              // Render in Gmap instead of canvas
-              var point = new google.maps.LatLng(p1[i].x / 5, p1[i].y / 5);
-              var marker = new google.maps.Marker({
-                  position: point, icon: blueIcon, map: map});
-              markersArray.push(marker);
-            }
-          }
-
-          function deleteOverlays() {
-            if (markersArray) {
-              for (var i in markersArray) {
-                markersArray[i].setMap(null);
-              }
-              markersArray = [];
-            }
-          }
-
-          function test() {
-            var name = "Test 1";
-            var self = this;
-            deleteOverlays();
-            drawPoints();
-            setTimeout(function() {
-              var opts = {
-                points: p1,
-                t0: 1,
-                g: 0.99,
-                stepsPerT: 10
-              };
-              var callback = {
-                name: name,
-                newMin: function(p) {
-                },
-                draw: function(p) {
-                  document.querySelector('#w-loading').style.visibility = 'hidden';
-                  drawPath(p);
-                }
-              };
-              var a;
-              if (useThreads) {
-                var worker = new Worker('src/webworkers/Worker.js')
-                worker.onmessage = function(event) {
-                  var returnedData = JSON.parse(event.data);
-                  var msg = returnedData[0];
-                  var p = returnedData[1];
-                  callback[msg](p);
-                };
-                worker.onerror = function(event) {
-                  console.log(event);
-                };
-                worker.postMessage(JSON.stringify({
-                  opts: opts,
-                  width: 200,
-                  height: 200
-                }));
-              } else {
-                var annealing = new Annealing();
-                var callback2 = {
-                  onNewMin: function(p) {
-                    // postMessage('newmin')
-                  },
-                  onDone: function(p) {
-                    document.querySelector('#w-loading').style.visibility = 'hidden';
-                    drawPath(p);
-                  }
-                };
-                annealing.init(opts, opts.width, opts.height, callback2);
-                annealing.go();
-              }
-            }, 10);
-          }
-        })();
-        </script>
-        </section>
+      </section>
         </div>
 
 
@@ -791,45 +249,7 @@ socket.<b>onopen</b> = function(event) {
 socket.<b>onmessage</b> = function(event) { alert(event.data); }
 socket.<b>onclose</b> = function(event) { alert('closed'); }
 </pre>
-
-            <p id="websockets-message">Full-duplex, bi-directional communication over the Web:
-            Both the server and client can send data at any time, or even at the same time.
-            Only the data itself is sent, without the overhead of HTTP headers, dramatically
-            reducing bandwidth.</p>
-
-            <div id="ws-left">
-              Use the echo demo below to test a WebSocket connection from your browser.
-              Both the message you send and the response you receive travel over the same WebSocket connection.
-
-              <div id="ws-config-location">
-                <h4>Location:</h4>
-                <input type="text" id="wsUri" disabled />
-                <br>
-                <input type="checkbox" id="wsSecureCb" onclick="wsToggleTls();" disabled />
-                <label id="wsSecureCbLabel" for="wsSecureCb">Use secure WebSocket (TLS/SSL)</label>
-                <br>
-                <button id="wsConnectBut" disabled>Connect</button>
-                <button id="wsDisconnectBut" disabled>Disconnect</button>
-              </div>
-              <div id="ws-config-message">
-                <h4>Message:</h4>
-                <input  type="text" id="wsMessage" value="Hello, WebSocket" disabled />
-                <button id="wsSendBut" disabled>Send</button>
-              </div>
-            </div>
-            <div id="ws-right">
-              <div id="ws-log">
-                <strong>Output:</strong>
-                <div id="wsConsoleLog"></div>
-                <button id="wsClearLogBut">Clear log</button>
-              </div>
-            </div>
-            <div id="ws-powered">
-              Demo powered by <a href="http://kaazing.com" target="_blank"><img id="wsKaazingLogo" src="src/websocket/kaazing-logo_99x16.png" width="99" height="16" alt="Powered by Kaazing" /></a>
-            </div>
-
           </section>
-          <script src="src/websocket/websocket.js" defer></script>
         </div>
 
 
@@ -844,55 +264,6 @@ socket.<b>onclose</b> = function(event) { alert('closed'); }
   window.<b>webkitNotifications</b>.<b>requestPermission</b>();
 }
 </pre>
-        <div id="notifications-message">
-          <p>
-            <button id="request-permission" href="#">Set notification permissions for this page</button>
-          </p>
-          <p>Note: Use this button if you also want to <em>reset</em> the permissions</p>
-
-          <br>
-          <p>Enter your twitter user name to show your last tweet as a notification</p>
-          <input type="text" id="username" placeholder="username" />
-          <button id="show-tweets">Show tweet notifications</button>
-        </div>
-
-          <script defer>
-          document.getElementById('request-permission').addEventListener('click', function() {
-            window.webkitNotifications.requestPermission();
-          }, false);
-
-          document.getElementById('show-tweets').addEventListener('click', function() {
-            readTweets();
-          }, false);
-
-          function readTweets() {
-            var username = document.getElementById('username').value;
-            if (username == 'username') {
-              alert('Enter a username first');
-              return;
-            }
-            var script = document.createElement("script");
-            script.src = 'http://twitter.com/statuses/user_timeline/'+ username+'.json?count=1&callback=fetchTweets';
-            document.body.appendChild(script);
-          }
-
-          function fetchTweets(data) {
-            var tweet;
-            var i = data.length;
-            while (i--) {
-              tweet = data[i];
-              if (window.webkitNotifications.checkPermission() == 0) {
-                // note the show()
-                window.webkitNotifications.createNotification(tweet.user.profile_image_url, tweet.user.name, tweet.text).show();
-              } else {
-                // Note that we can't call requestPermission from here as we are in the callback function and not triggered just on user action
-                alert('You have to click on "Set notification permissions for this page" first to be able to receive notifications.');
-                return;
-              }
-            }
-          }
-          </script>
-
           </section>
         </div>
 
@@ -914,103 +285,6 @@ socket.<b>onclose</b> = function(event) { alert('closed'); }
   event.<b>dataTransfer.effectAllowed</b> = 'copy';
 }, false);
 </pre>
-            <ol id="drag-zone">
-              <li><img src="src/dwd1.png" draggable class="copy" /></li>
-              <li><span class="draggable-text" draggable>Select text and drag (original text will be dropped)</span></li>
-              <li><span class="draggable-text" draggable class="overwrite">Select text and drag (dragged text data will be altered from original)</span></li>
-            </ol>
-            <div id="drop-data">Source Data</div>
-            <div id="drop-zone">Drop Area</div>
-            <script defer>
-            (function() {
-              var dragZone = document.querySelector('#drag-zone');
-              var dropZone = document.querySelector('#drop-zone');
-              dragZone.addEventListener('dragstart', function(event) {
-                if (event.target.className) { // img case
-                  event.dataTransfer.effectAllowed = event.target.className;
-                  event.target.style.border = "4px solid #cc3300";
-                }
-                else { // text case
-                  if (event.target.parentNode.className == 'overwrite') {
-                    event.dataTransfer.setData("text", "<strong>Overwritten Content</strong>");
-                  }
-                  event.target.parentNode.style.border = "4px solid #cc3300";
-                }
-                return true;
-              }, true);
-              dragZone.addEventListener('dragend', function(event) {
-                if (event.target.className) { // img case
-                  event.target.style.border = "4px solid #888";
-                }
-                else { // text case
-                  event.target.parentNode.style.border = "4px solid #888";
-                }
-                return true;
-              }, true);
-              dropZone.addEventListener('dragenter', function(event) {
-                if (event.preventDefault) event.preventDefault();
-                event.dataTransfer.dropEffect = 'copy';
-                this.className = 'hovering';
-                return false;
-              }, false);
-              dropZone.addEventListener('dragover', function(event) {
-                if (event.preventDefault) event.preventDefault(); // allows us to drop
-                event.dataTransfer.dropEffect = 'copy';
-                return false;
-              }, false);
-              dropZone.addEventListener('dragleave', function(event) {
-                if (event.preventDefault) event.preventDefault(); // allows us to drop
-                this.className = '';
-                return false;
-              }, false);
-              dropZone.addEventListener('drop', function(event) {
-                if (event.preventDefault) event.preventDefault();
-                var imgPassed = null;
-                var dropdata = document.querySelector('#drop-data');
-                var types = event.dataTransfer.types;
-                document.querySelector('#drop-data').textContent = '';
-                this.innerHTML = '';
-                for (var i = 0; i < types.length; i++) {
-                  if (types[i] == 'Files') {
-                    var files = event.dataTransfer.files;
-                    for (var j = 0; j < files.length; j++) {
-                      dropdata.textContent += 'File Name: '+files[j].fileName;
-                      dropdata.textContent += 'File Size: '+files[j].fileSize;
-                    }
-                  }
-                  else {
-                    if (typeof event.dataTransfer.getData(types[i]) !== 'undefined') {
-                      dropdata.innerHTML += '<p><em class="datatypes">'+types[i]+'</em>: <br />'+event.dataTransfer.getData(types[i]).replace(/</g, '&lt;') + '</p>';
-                    }
-                  }
-
-                  if (types[i] == 'text/uri-list') {
-                    imgPassed = event.dataTransfer.getData('text/uri-list');
-                  }
-                }
-                if (imgPassed) {
-                  var cEl = document.createElement('canvas');
-                  cEl.width = 200;
-                  cEl.height = 100;
-                  var ctx = cEl.getContext('2d');
-                  var img_buffer = document.createElement('img');
-                  img_buffer.src = imgPassed;
-                  img_buffer.style.display = 'none';
-                  document.body.appendChild(img_buffer); // this line only needed in safari
-                  img_buffer.onload = function() { ctx.drawImage(img_buffer,0,0,100,100); }
-                  this.appendChild(cEl);
-                } else {
-                  if (event.dataTransfer.getData('text')) {
-                    this.innerHTML = event.dataTransfer.getData('text');
-                  }
-                  else if (event.dataTransfer.getData('text/plain')) {
-                    this.innerHTML = event.dataTransfer.getData('text/plain');
-                  }
-                }
-                return false;
-              }, false);
-            })();
-            </script>
           </section>
         </div>
 
@@ -1029,19 +303,6 @@ document.querySelector('#dropzone').addEventListener('drop', function(e) {
   reader.<b>readAsDataURL</b>(e.<b>dataTransfer.files[0]</b>);
 }, false);
 </pre>
-            <div class="example">
-              <div id="dropzone" class="vbox boxcenter center">
-                Drop in images from your desktop
-              </div>
-            </div>
-            <div id="dnd-thumbnails" class="center"></div>
-
-            <script src="src/dnd/dnd-lib.js" defer></script>
-            <script defer>
-              window.addEventListener('load', function(e) {
-                var dndc = new DNDFileController('dropzone', 'dnd-thumbnails');
-              }, false);
-            </script>
           </section>
         </div>
 
@@ -1066,23 +327,6 @@ for (var i = 0, file; file = files[i]; ++i) {
 }
 </pre>
 
-            <div class="example">
-              Drag each of these files onto your desktop:
-              <a href="http://static.googleusercontent.com/external_content/untrusted_dlcp/www.google.com/en/us/intl/en/landing/chrome/cadie/glasses.pdf" class="dragout" data-downloadurl="application/pdf:Chrome3DGlasses.pdf:http://static.googleusercontent.com/external_content/untrusted_dlcp/www.google.com/en/us/intl/en/landing/chrome/cadie/glasses.pdf">.pdf file</a>
-              <a href="src/star.mp3" class="dragout" data-downloadurl="audio/mpeg:star.mp3:http://slides.html5rocks.com/src/star.mp3">.mp3 file</a>
-            </div>
-            <p class="center" style="font-size:90%">( this feature is only available in Google Chrome )</p>
-            <script defer>
-              (function() {
-                var files = document.querySelectorAll('.dragout');
-                for (var i = 0, file; file = files[i]; ++i) {
-                  file.setAttribute('draggable', 'true'); // Don't really need, but good practice.
-                  file.addEventListener('dragstart', function(evt) {
-                    evt.dataTransfer.setData('DownloadURL', this.getAttribute('data-downloadurl'));
-                  }, false);
-                }
-              })();
-            </script>
           </section>
         </div>
 
@@ -1114,7 +358,6 @@ for (var i = 0, file; file = files[i]; ++i) {
 
 }, opt_errorHandler);
 </pre>
-            <p class="center" style="font-size:90%">( The FileSystem API is currently only implemented in Google Chrome 9+ )</p>
           </section>
         </div>
 
@@ -1131,61 +374,6 @@ for (var i = 0, file; file = files[i]; ++i) {
   }, errorHandler);
 }
 </pre>
-          <button id="see-position">Show Position</button> <span id="geo-log"></span>
-          <div id="geo-map" class="gmap example">
-            <img src="http://maps.google.com/maps/api/staticmap?center=37.4419,-94.1419&zoom=3&size=680x278&sensor=true"/>
-          </div>
-
-          <script defer>
-          (function() {
-            var map = null;
-            var geolog = document.querySelector('#geo-log');
-            var geoMap = document.querySelector('#geo-map');
-
-            function showPosition(position) {
-              geolog.textContent = "You're within " + position.coords.accuracy +
-                  " meters of (" + position.coords.latitude + ", " +
-                  position.coords.longitude + ")";
-              var latLng = new google.maps.LatLng(
-                  position.coords.latitude, position.coords.longitude);
-              var marker = new google.maps.Marker({
-                position: latLng,
-                map: map
-              });
-              map.setCenter(latLng);
-              map.setZoom(15);
-            }
-
-            function handlePositionError(evt) {
-              geolog.textContent = evt.message;
-            }
-
-            function successPositionHandler(evt) {
-              // Load map if it doesn't already exist and when user clicks the button.
-              if (!map) {
-                map = new google.maps.Map(geoMap, {
-                  zoom: 3,
-                  center: new google.maps.LatLng(37.4419, -94.1419), // United States
-                  mapTypeId: google.maps.MapTypeId.ROADMAP
-                });
-                map.getDiv().style.border =  '1px solid #ccc';
-              }
-
-              if (navigator.geolocation) {
-                geolog.style.visibility = 'visible';
-                geolog.textContent = 'Looking for location...';
-                navigator.geolocation.getCurrentPosition(showPosition, handlePositionError);
-                // Also monitor position as it changes.
-                //navigator.geolocation.watchPosition(showPosition, handlePositionError);
-              } else {
-                geolog.textContent = 'Oops! Your browser does not support geolocation.';
-              }
-            }
-
-            document.querySelector('#see-position').addEventListener('click', successPositionHandler, false);
-            geoMap.addEventListener('click', successPositionHandler, false);
-          })();
-          </script>
           </section>
         </div>
 
@@ -1200,87 +388,13 @@ window.addEventListener('<em>deviceorientation</em>', function(event) {
   var g = event.<b>gamma</b>;
 }, false);
 </pre>
-          <p>This sample requires FF3.6+ or Google Chrome
-          on a device with a built in accelerometer or iOS 4.2.</p>
-          <div class="flex hbox boxcenter">
-            <div id="orientationWrap" class="noflex vbox boxcenter">
-              <div class="layer"><img src="src/orientation/chrome-layer-01.png"/></div>
-              <div class="layer"><img src="src/orientation/chrome-layer-02.png"/></div>
-              <div class="layer"><img src="src/orientation/chrome-layer-03.png"/></div>
-              <div class="layer"><img src="src/orientation/chrome-layer-04.png"/></div>
-              <div class="layer"><img src="src/orientation/chrome-layer-05.png"/></div>
-            </div>
-          </div>
-          <script defer>
-            function OrientationSlide(slide) {
-              this._slide = document.querySelector(slide);
-              this._lastBeta = 0;
-              this._lastGamma = 0;
-            }
-            OrientationSlide.prototype.orientationListener = function(evt) {
-              // For FF3.6+
-              if (!evt.gamma && !evt.beta) {
-                evt.gamma = -(evt.x * (180 / Math.PI));
-                evt.beta = -(evt.y * (180 / Math.PI));
-              }
-
-              var overThreshold = Math.abs(evt.gamma) > 4 || Math.abs(evt.beta) > 4;
-              var gamma = overThreshold ? evt.gamma : 0;
-              var beta = overThreshold ? evt.beta : 0;
-
-              if (this._lastGamma != gamma || this._lastBeta != beta) {
-                var zindex = 0;
-                var layers = document.querySelectorAll('.layer');
-                for (var i = 0, elem; elem = layers[i]; ++i) {
-                  zindex++;
-                  var x = Math.round(1.5 * gamma * zindex);
-                  var y = Math.round(1.5 * beta * zindex);
-                  var style = elem.style;
-                  style.left = x.toString() + 'px';
-                  style.top = y.toString() + 'px';
-                  style.webkitTransform = 'rotateY(' + (-2.0 * gamma) + 'deg) rotateX(' + (-2.0 * beta) + 'deg)';
-                  style.MozTransform = 'rotateY(' + (-2.0 * gamma) + 'deg) rotateX(' + (-2.0 * beta) + 'deg)';
-                }
-                this._lastGamma = gamma;
-                this._lastBeta = beta;
-              }
-            };
-            OrientationSlide.prototype.onunload = function(evt) {
-              window.removeEventListener('deviceorientation', this.orientationListener, false);
-              window.removeEventListener('MozOrientation', this.orientationListener, false);
-            };
-            OrientationSlide.prototype.onload = function(evt) {
-              window.addEventListener('deviceorientation', this.orientationListener, false);
-              window.addEventListener('MozOrientation', this.orientationListener, false);
-            };
-            var os = new OrientationSlide('#slide-orientation');
-
-            if (!('ondeviceorientation' in window) &&
-                !(window.onmozorientation)) {
-              document.querySelector('#slide-orientation p').style.display = 'block';
-            }
-          </script>
           </section>
         </div>
 
         <div class="slide device-access" id="speech-input">
           <header><span class="html">HTML</span> <h1>Speech Input</h1></header>
           <section>
-
             <pre>&lt;input type="text" <b>x-webkit-speech</b> /&gt;</pre>
-
-            <div class="flex hbox boxcenter">
-              <div class="noflex vbox boxcenter" style="height:300px;text-align:center">
-               <input id="speech-input-field" type="text" x-webkit-speech />
-               <p style="display:none">Speech input is not enabled in your browser.<br>
-               Try running Google Chrome with the <code>--enable-speech-input</code> flag.</p>
-              </div>
-            </div>
-            <script>
-              if (!('webkitSpeech' in document.createElement('input'))) {
-                document.querySelector('#speech-input p').style.display = 'block';
-              }
-            </script>
           </section>
         </div>
 
@@ -2952,3 +2066,4 @@ window.addEventListener('<em>popstate</em>', function(event) {
     <script src="js/utils.js"></script>
   </body>
 </html>
+
