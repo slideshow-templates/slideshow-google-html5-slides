@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>HTML5 Presentation</title>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans+Mono">
+    <link rel="stylesheet" href="src/prettify/prettify.css" id="prettify-link" disabled>
+    <link rel="stylesheet" href="styles/fonts.css"        media="screen">
+    <link rel="stylesheet" href="styles/presentation.css" media="screen">
+    <link rel="stylesheet" href="styles/common.css"       media="screen">
+
+    <!-- todo: check - is media="screen" needed? what is the "default"? -->
+    <link rel="stylesheet" href="styles/default.css"  class="theme" media="screen">
+    <link rel="stylesheet" href="styles/moon.css"     class="theme" media="screen">
+    <link rel="stylesheet" href="styles/sand.css"     class="theme" media="screen">
+    <link rel="stylesheet" href="styles/sea_wave.css" class="theme" media="screen">
+  </head>
+  <body>
+    <div id="flex-container">
+    <nav id="helpers">
+      <button title="Previous slide" id="nav-prev" class="nav-prev">&#8701;</button>
+      <button title="Jump to a random slide" id="slide-no">5</button>
+      <button title="Next slide" id="nav-next" class="nav-next">&#8702;</button>
+      <menu>
+        <button type="checkbox" data-command="toc" title="Table of Contents" class="toc">TOC</button>
+        <!-- <button type="checkbox" data-command="resources" title="View Related Resources">&#9734;</button> -->
+        <button type="checkbox" data-command="notes" title="View Slide Notes">&#9999;</button>
+        <button type="checkbox" data-command="source" title="View slide source">&#8635;</button>
+        <button type="checkbox" data-command="help" title="View Help">?</button>
+      </menu>
+    </nav>
+    <div class="slides">
+        <div id="presentation-counter">Loading...</div>
+
+        <div class="slide" id="landing-slide">
+          <section class="middle">
+            <p>This presentation is an HTML5 website</p>
+            <p>Press <span id="left-init-key" class="key">&rarr;</span> key to advance.</p>
+          </section>
+          <aside class="note">
+            <section>
+              Welcome! (This field is for speaker notes and commentary.)
+            </section>
+          </aside>
+        </div>
+
+        <div class="slide" id="controls-slide">
+          <header>Slides controls</header>
+          <section>
+            <ul>
+              <li><span class="key">&larr;</span> and <span class="key">&rarr;</span> to move around.</li>
+              <li><span class="key">Ctrl/Command</span> and <span class="key">+</span> or <span class="key">-</span> to zoom in and out if slides don’t fit.</li>
+              <li><span class="key">S</span> to view page source.</li>
+              <li><span class="key">T</span> to change the theme.</li>
+              <li><span class="key">H</span> to toggle syntax highlight.</li>
+              <li><span class="key">N</span> to toggle speaker notes.</li>
+              <li><span class="key">3</span> to toggle 3D effect.</li>
+              <li><span class="key">0</span> to toggle help.</li>
+            </ul>
+          </section>
+        </div>
+
+        <div class="slide" id="title-slide">
+          <section class="middle">
+            <hgroup>
+              <h1>
+                HTML5*
+              </h1>
+              <h2>
+                Web Development to the next level
+              </h2>
+            </hgroup>
+            <p>*Including other next generation technologies of the Web Development stack</p>
+          </section>
+        </div>
+
+
+        <div class="slide" id="timeline-slide">
+          <header>Rough Timeline of Web Technologies</header>
+          <section>
+
+            <ul id="timeline">
+              <li data-auto><span class="year">1991</span> <span class="html">HTML</span></li>
+              <li data-auto><span class="year">1994</span> <span class="html">HTML 2</span></li>
+              <li data-auto><span class="year">1996</span> <span class="css">CSS 1</span> + <span class="js">JavaScript</span></li>
+              <li data-auto><span class="year">1997</span> <span class="html">HTML 4</span></li>
+              <li data-auto><span class="year">1998</span> <span class="css">CSS 2</span></li>
+              <li data-auto><span class="year">2000</span> <span class="html">XHTML 1</span></li>
+              <li><span class="year"><em class="stroke">2002</em></span> <span class="css">Tableless Web Design</span></li>
+              <li><span class="year"><em class="stroke">2005</em></span> <span class="js">AJAX</span></li>
+              <li><span class="year"><em class="stroke">2009</em></span> <span class="html">HTML 5</span></li>
+            </ul>
+          </section>
+        </div>
+
+
+        <div class="slide" id="formula-intro-slide">
+          <section class="middle formula" data-build>
+            HTML5 ~=
+            <span class="html">HTML</span>
+            +
+            <span class="css">CSS</span>
+            +
+            <span class="js">JS</span>
+          </section>
+        </div>
+
+        <div class="slide" id="table-of-contents">
+          <header><h1>Today, we will cover...</h1></header>
+          <section>
+            <ul id="toc-list">
+            </ul>
+          </section>
+        </div>
+
+        <div class="slide transitionSlide" id="offline-storage-title">
+          <section class="middle">
+            <h2>Offline / Storage</h2>
+            <p>Expect the unexpected</p>
+            <img src="http://www.html5rocks.com/static/images/identity/classes_64/HTML5_Offline_Storage_64.png" title="HTML5 Offline &amp; Storage" alt="HTML5 Offline &amp; Storage">
+          </section>
+        </div>
+
+        <div class="slide offline-storage" id="web-storage">
+          <header><span class="js">JS</span> <h1>Web Storage</h1></header>
+          <section>
+<pre>
+// use localStorage for persistent storage
+// use sessionStorage for per tab storage
+saveButton.addEventListener('click', function () {
+  window.<b>localStorage</b>.<b>setItem</b>('value', area.value);
+  window.<b>localStorage</b>.<b>setItem</b>('timestamp', (new Date()).getTime());
+}, false);
+textarea.value = window.<b>localStorage</b>.<b>getItem</b>('value');
+</pre>
+          </section>
+        </div>
+
+
+
+        <div class="slide transitionSlide" id="realtime-title">
+          <section class="middle">
+            <h2>Realtime / Communication</h2>
+            <p>Stay connected</p>
+            <img src="http://www.html5rocks.com/static/images/identity/classes_64/HTML5_Connectivity_64.png" title="HTML5 Realtime &amp; Communication" alt="HTML5 Realtime &amp; Communication">
+          </section>
+        </div>
+
+        <div class="slide realtime-communication" id="web-workers">
+          <header><span class="js">JS</span> <h1>Web Workers</h1></header>
+          <section>
+main.js:
+<pre>
+var worker = new <b>Worker</b>('task.js');
+worker.<b>onmessage</b> = function(event) { alert(event.data); };
+worker.<b>postMessage</b>('data');
+</pre>
+task.js:
+<pre>
+self.<b>onmessage</b> = function(event) {
+  // Do some work.
+  self.<b>postMessage</b>("recv'd: " + event.data);
+};
+</pre>
+      </section>
+        </div>
+
+
+
+
+        <div class="slide transitionSlide" id="hardware-access-title">
+          <section class="middle">
+            <h2>File / Hardware Access</h2>
+            <p>Deeper integration with the Operating System</p>
+            <img src="http://www.html5rocks.com/static/images/identity/classes_64/HTML5_Device_Access_64.png" title="HTML5 Device Access" alt="HTML5 Device Access">
+          </section>
+        </div>
+
+        <div class="slide device-access" id="native-drag-and-drop">
+          <header><span class="js">JS</span> <h1>Native Drag &amp; Drop</h1></header>
+          <section id="dnd-section">
+<pre>document.addEventListener(<em>'dragstart'</em>, function(event) {
+  event.<b>dataTransfer.setData</b>('text', 'Customized text');
+  event.<b>dataTransfer.effectAllowed</b> = 'copy';
+}, false);
+</pre>
+          </section>
+        </div>
+
+
+
+        <div class="slide transitionSlide" id="semantics-markup-title">
+          <section class="middle">
+            <h2>Semantics &amp; Markup</h2>
+            <p>More meaningful elements</p>
+            <img src="http://www.html5rocks.com/static/images/identity/classes_64/HTML5_Semantics_64.png" title="HTML5 Semantics &amp; Markup" alt="HTML5 Semantics &amp; Markup">
+          </section>
+        </div>
+
+        <div class="slide semantics" id="semantic-tags-1">
+          <header><span class="html">HTML</span> <h1>Better semantic tags</h1></header>
+          <section>
+            <pre class="two-column">&lt;body&gt;
+  &lt;<b>header</b>&gt;
+    &lt;<b>hgroup</b>&gt;
+      &lt;h1&gt;Page title&lt;/h1&gt;
+      &lt;h2&gt;Page subtitle&lt;/h2&gt;
+    &lt;/hgroup&gt;
+  &lt;/header&gt;
+
+  &lt;<b>nav</b>&gt;
+   &lt;ul&gt;
+     Navigation...
+   &lt;/ul&gt;
+  &lt;/nav&gt;
+  &lt;<b>section</b>&gt;
+   &lt;<b>article</b>&gt;
+     &lt;<b>header</b>&gt;
+       &lt;h1&gt;Title&lt;/h1&gt;
+     &lt;/header&gt;
+     &lt;section&gt;
+       Content...
+     &lt;/section&gt;
+   &lt;/article&gt;
+   &lt;article&gt;
+     &lt;header&gt;
+       &lt;h1&gt;Title&lt;/h1&gt;
+     &lt;/header&gt;
+     &lt;section&gt;
+       Content...
+     &lt;/section&gt;
+   &lt;/article&gt;
+  &lt;/section&gt;
+
+  &lt;<b>aside</b>&gt;
+   Top links...
+  &lt;/aside&gt;
+
+  &lt;<b>figure</b>&gt;
+    &lt;img src="..."/&gt;
+    &lt;<b>figcaption</b>&gt;Chart 1.1&lt;/figcaption&gt;
+  &lt;/figure&gt;
+
+  &lt;<b>footer</b>&gt;
+   Copyright &copy;<br>   &lt;<b>time</b> <b>datetime</b>="2010-11-08"&gt;2010&lt;/time&gt;.
+  &lt;/footer&gt;
+&lt;/body&gt;
+</pre>
+          </section>
+        </div>
+
+
+
+        <div class="slide transitionSlide" id="graphics-multimedia-title">
+          <section class="middle">
+            <h2>Graphics / Multimedia</h2>
+            <p>2D &amp; 3D</p>
+            <img src="http://www.html5rocks.com/static/images/identity/classes_64/HTML5_3D_Effects_64.png" title="HTML5 3D &amp; Effects" alt="HTML5 3D &amp; Effects">
+            <img src="http://www.html5rocks.com/static/images/identity/classes_64/HTML5_Multimedia_64.png" title="HTML5 Multimedia" alt="HTML5 Multimedia">
+          </section>
+        </div>
+
+        <div class="slide multimedia" id="video-audio">
+          <header><span class="html">HTML</span> <span class="js">JS</span> <h1>Audio + Video</h1></header>
+          <section>
+            <pre>&lt;<b>audio</b> id="audio" src="sound.mp3" <b>controls</b>&gt;&lt;/audio&gt;
+document.getElementById("audio").<b>muted</b> = false;
+</pre>
+<pre>
+&lt;<b>video</b> id="video" src="movie.webm" <b>autoplay</b> <b>controls</b>&gt;&lt;/video&gt;
+document.getElementById("video").<b>play</b>();
+</pre>
+
+          </section>
+        </div>
+
+
+        <div class="slide transitionSlide" id="css3-title">
+          <section class="middle">
+            <h2>CSS3</h2>
+            <p>Presentation &amp; Styling</p>
+            <img src="http://www.html5rocks.com/static/images/identity/classes_64/HTML5_Styling_64.png" title="HTML5 Styling" alt="HTML5 Styling">
+          </section>
+        </div>
+
+
+        <div class="slide styling" id="css-selectors">
+          <header><span class="css">CSS</span> <h1>CSS Selectors</h1></header>
+          <section class="left">
+            <h2>Selectors</h2>
+<pre>.row:<b>nth-child(even)</b> {
+  background: #dde;
+}
+.row:<b>nth-child(odd)</b> {
+  background: white;
+}
+</pre>
+
+            <h2>Image-like display</h2>
+            <pre>div {
+  display: <b>inline-block</b>;
+}
+</pre>
+          </section>
+
+          <section class="right">
+            <h2>Specific attributes</h2>
+            <pre>input<b>[type="text"]</b> {
+  background: #eee;
+}</pre>
+
+            <h2>Negation</h2>
+            <pre><b>:not</b>(.box) {
+  color: #00c;
+}
+<b>:not</b>(span) {
+  display: block;
+}
+</pre>
+
+            <h2>More specific targetting</h2>
+            <pre>h2:<b>first-child</b> { ... }
+
+div.text <b>&gt;</b> div { ... }
+h2 <b>+</b> header { ... }
+</pre>
+          </section>
+          <footer><a href="http://www.w3.org/TR/CSS2/selector.html#pattern-matching">CSS2 selectors</a> and <a href="http://www.w3.org/TR/css3-selectors/#selectors">CSS3 selectors</a> introduced some of the ones demonstrated here.</footer>
+        </div>
+
+
+
+
+       <div class="slide transitionSlide" id="nuts-bolts-title">
+          <section class="middle">
+            <h2>Nuts &amp; Bolts</h2>
+            <p>Improvements to the core platform</p>
+            <img src="http://www.html5rocks.com/static/images/identity/classes_64/HTML5_Performance_64.png" title="HTML5 Performance &amp; Integration" alt="HTML5 Performance &amp; Integration">
+          </section>
+        </div>
+
+
+        <div class="slide performance" id="new-selectors">
+          <header><span class="js">JS</span> <h1>New Selectors</h1></header>
+          <section>
+            <h2>Finding elements by class (DOM API)</h2>
+
+            <pre>var el = document.getElementById('section1');
+el.focus();
+
+var els = document.getElementsByTagName('div');
+els[0].focus();
+
+var els = document.<b>getElementsByClassName</b>('section');
+els[0].focus();</pre>
+
+            <h2>Finding elements by CSS syntax (Selectors API)</h2>
+
+            <pre>var els = document.<b>querySelectorAll</b>("ul li:nth-child(odd)");
+var tds = document.<b>querySelectorAll</b>("table.test > tr > td");
+var el = document.<b>querySelector</b>("table.test > tr > td"); // el == tds[0]
+</pre>
+          </section>
+        </div>
+
+
+        <div class="slide" id="browser-support">
+          <header><h1>See it today?</h1></header>
+          <section>
+            <ul class="bullets">
+              <li>Modern Browsers</li>
+              <li>Mobile Browsers</li>
+              <li>Chrome extensions/Firefox Jetpack/Safari extensions</li>
+            </ul>
+          </section>
+        </div>
+
+
+        <div class="slide" id="chrome-frame">
+          <header><h1>Chrome Frame</h1></header>
+          <section>
+            <ul class="bullets">
+              <li>Minimal effort for bringing IE6, 7 and 8 up to the latest HTML5 technologies</li>
+              <li>Two ways to get your websites ready for Chrome Frame:</li>
+            </ul>
+            <p>Client side:</p>
+            <pre>&lt;meta http-equiv="X-UA-Compatible" content="chrome=1"></pre>
+            <p>Server side:</p>
+            <pre>X-UA-Compatible: chrome=1</pre>
+            <p style="font-size: 30px">
+              Try to load this presentation in IE!
+            </p>
+          </section>
+        </div>
+
+
+        <div class="slide" id="formula-outro-slide">
+          <section class="middle formula">
+            HTML5 ~=
+            <span class="html">HTML</span>
+            +
+            <span class="css">CSS</span>
+            +
+            <span class="js">JS</span>
+            <p>
+              HTML5 <em class="stroke">=</em> Next Generation Features for Modern Web Development
+            </p>
+            <p class="resource-link">
+              <a href="http://slides.html5rocks.com">http://slides.html5rocks.com</a>
+              <a href="http://www.html5rocks.com">http://www.html5rocks.com</a>
+            </p>
+          </section>
+        </div>
+
+        <div id="speaker-note" class="invisible" style="display: none;"></div>
+        <aside id="help" class="sidebar invisible" style="display: none;">
+          <table>
+            <caption>Help</caption>
+            <tbody>
+              <tr>
+                <th>Move Around</th>
+                <td>&larr;&nbsp;&rarr;</td>
+              </tr>
+              <tr>
+                <th>Source File</th>
+                <td>s</td>
+              </tr>
+              <tr>
+                <th>Change Theme</th>
+                <td>t</td>
+              </tr>
+              <tr>
+                <th>Syntax Highlight</th>
+                <td>h</td>
+              </tr>
+              <tr>
+                <th>Speaker Notes</th>
+                <td>n</td>
+              </tr>
+              <tr>
+                <th>Toggle 3D</th>
+                <td>3</td>
+              </tr>
+              <tr>
+                <th>Help</th>
+                <td>0</td>
+              </tr>
+            </tbody>
+          </table>
+        </aside>
+
+    </div> <!-- slides -->
+  </div>
+
+    <script src="src/prettify/prettify.js" onload="prettyPrint();" defer></script>
+    <script src="js/utils.js"></script>
+    <script src="js/slide.js"></script>
+    <script src="js/slideshow.js"></script>
+    <script src="js/start.js"></script>
+  </body>
+</html>
+
