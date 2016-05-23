@@ -24,6 +24,15 @@
 
 ## Structure
 
+Uses 900 x 700 (height x width) pixels for slide layouts.
+
+- Allows (supports) only h1 in header (or just text).
+- Allows (supports) only h2 in section (or just text).
+- Use section="middle" to center slide e.g. used for "section" (divider) slides.
+- Title slide (#title-slide) gets "styled" individually (e.g. using #title-slide hgroup h1 and #title-slide hgroup h2)
+
+
+
 All wrapped in div containter w/ `#flex-container` e.g.
 
 ```
