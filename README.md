@@ -5,8 +5,8 @@
 See [`slides.html5.html`](http://slideshow-templates.github.io/slideshow-google-html5-slides/slides.html5.html).
 
 For testing see [`test.html`](http://slideshow-templates.github.io/slideshow-google-html5-slides/test.html),
-[`test.html5.html`](http://slideshow-templates.github.io/slideshow-google-html5-slides/test.html5.html), and
-[`test.html5a.html`](http://slideshow-templates.github.io/slideshow-google-html5-slides/test.html5a.html).
+[`test.html5rocks.html`](http://slideshow-templates.github.io/slideshow-google-html5-slides/test.html5rocks.html), and
+[`test.html5rocks_a.html`](http://slideshow-templates.github.io/slideshow-google-html5-slides/test.html5rocks_a.html).
 
 
 
