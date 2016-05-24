@@ -1,0 +1,56 @@
+<div class="slide transitionSlide" id="realtime-title">
+  <section class="middle">
+    <h2>Realtime / Communication</h2>
+    <p>Stay connected</p>
+    <img src="http://www.html5rocks.com/static/images/identity/classes_64/HTML5_Connectivity_64.png" title="HTML5 Realtime &amp; Communication" alt="HTML5 Realtime &amp; Communication">
+  </section>
+</div>
+
+
+<div class="slide realtime-communication" id="web-workers">
+  <header><span class="js">JS</span> <h1>Web Workers</h1></header>
+  <section>
+main.js:
+<pre>
+var worker = new <b>Worker</b>('task.js');
+worker.<b>onmessage</b> = function(event) { alert(event.data); };
+worker.<b>postMessage</b>('data');
+</pre>
+task.js:
+<pre>
+self.<b>onmessage</b> = function(event) {
+// Do some work.
+self.<b>postMessage</b>("recv'd: " + event.data);
+};
+</pre>
+</section>
+</div>
+
+
+<div class="slide realtime-communication" id="web-sockets">
+  <header><span class="js">JS</span> <h1>WebSocket</h1></header>
+  <section>
+<pre>var socket = new <b>WebSocket</b>('ws://html5rocks.websocket.org/echo');
+socket.<b>onopen</b> = function(event) {
+socket.<b>send</b>('Hello, WebSocket');
+};
+socket.<b>onmessage</b> = function(event) { alert(event.data); }
+socket.<b>onclose</b> = function(event) { alert('closed'); }
+</pre>
+  </section>
+</div>
+
+
+<div class="slide realtime-communication" id="notifications-api">
+  <header><span class="js">JS</span> <h1>Notifications</h1></header>
+  <section>
+<pre>if (window.<b>webkitNotifications</b>.<b>checkPermission</b>() == 0) {
+// you can pass any url as a parameter
+window.<b>webkitNotifications</b>.<b>createNotification</b>(tweet.picture, tweet.title,
+tweet.text).<b>show</b>();
+} else {
+window.<b>webkitNotifications</b>.<b>requestPermission</b>();
+}
+</pre>
+  </section>
+</div>

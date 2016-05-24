@@ -13,7 +13,6 @@ collections:
 
 
 exclude:
-- attic
 - README.md
 - QUICKREF.md
 - BUILD.md
