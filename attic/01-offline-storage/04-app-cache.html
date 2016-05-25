@@ -1,0 +1,32 @@
+<div class="slide offline-storage" id="app-cache">
+  <header><span class="js">JS</span> <h1>Application Cache</h1></header>
+  <section class="appcache-examples">
+<pre>&lt;html <b>manifest="cache.appcache"</b>&gt;</pre>
+
+<pre>
+window.<b>applicationCache</b>.addEventListener('updateready', function(e) {
+if (window.<b>applicationCache</b>.<b>status</b> == window.<b>applicationCache</b>.<b>UPDATEREADY</b>) {
+window.<b>applicationCache</b>.<b>swapCache()</b>;
+if (confirm('A new version of this site is available. Load it?')) {
+window.location.reload();
+}
+}
+}, false);
+</pre>
+cache.appcache:
+<pre>CACHE MANIFEST
+# version 1.0.0
+
+CACHE:
+/html5/src/logic.js
+/html5/src/style.css
+/html5/src/background.png
+
+NETWORK:
+*
+</pre>
+
+    <p id="appcache-message">Turn off your internet connection and refresh this page!
+      <img src="src/refresh.png" onclick="window.location.reload();"/></p>
+  </section>
+</div>

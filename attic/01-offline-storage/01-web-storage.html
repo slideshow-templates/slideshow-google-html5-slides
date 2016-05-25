@@ -1,0 +1,59 @@
+<div class="slide offline-storage" id="web-storage">
+  <header><span class="js">JS</span> <h1>Web Storage</h1></header>
+  <section>
+<pre>
+// use localStorage for persistent storage
+// use sessionStorage for per tab storage
+saveButton.addEventListener('click', function () {
+window.<b>localStorage</b>.<b>setItem</b>('value', area.value);
+window.<b>localStorage</b>.<b>setItem</b>('timestamp', (new Date()).getTime());
+}, false);
+textarea.value = window.<b>localStorage</b>.<b>getItem</b>('value');
+</pre>
+    <p id="localstorage-message">Save text value on the client side (crash-safe)</p>
+    <textarea id="ta" placeholder="Type your text here..."></textarea>
+    <button id="save-ta">Save</button>
+    <p id="ta-log"></p>
+    <script defer>
+      (function(){
+
+        try {
+          (window.localStorage.getItem) // will throw in Firefox under some settings
+        } catch(e){
+          return; // quit because dom.storage.enabled is false
+        }
+
+        var area = document.querySelector('#ta');
+        // place content from previous edit
+        if (!area.value) {
+          area.value = window.localStorage.getItem('value');
+        }
+        updateLog(false);
+
+        // your content will be saved locally
+        document.querySelector('#save-ta').addEventListener('click', function () {
+          window.localStorage.setItem('value', area.value);
+          window.localStorage.setItem('timestamp', (new Date()).getTime());
+          updateLog(true);
+        }, false);
+
+        function updateLog(new_save) {
+          var log = document.querySelector("#ta-log");
+          var delta = 0;
+          if (window.localStorage.getItem('value')) {
+            delta = ((new Date()).getTime() - (new Date()).setTime(window.localStorage.getItem('timestamp'))) / 1000;
+            if (new_save) {
+              log.textContent = 'Saved. Content will be available after browser refresh/reopen.';
+              setTimeout(function() {
+                log.textContent = '';
+              }, 3000);
+            } else {
+              log.textContent = 'last saved: ' + delta + 's ago';
+            }
+          }
+        }
+
+      })();
+    </script>
+  </section>
+</div>

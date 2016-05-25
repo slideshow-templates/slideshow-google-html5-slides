@@ -1,0 +1,80 @@
+<div class="slide offline-storage" id="quota-api">
+  <header><span class="js">JS</span> <h1>Quota API</h1></header>
+  <style>
+    #quota-api table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 40px;
+    }
+    #quota-api th {
+      font-weight: 600;
+      text-align: left;
+    }
+    #quota-api td,
+    #quota-api th {
+      border: 1px solid #222;
+      padding: 5px 10px;
+      vertical-align: top;
+    }
+    .quota-info-bubble {
+      background-color: #FCFCE4;
+      border: 1px solid yellow;
+      font-size: 80%;
+      padding: 5px;
+    }
+    .quota-info-bubble input, .quota-info-bubble button {
+      font-size: 12px;
+    }
+    .quota-info-bubble span {
+      display: block;
+    }
+  </style>
+  <section>
+<pre style="font-size: 80%">
+// Request Status
+<b>webkitStorageInfo</b>.<b>queryUsageAndQuota</b>(webkitStorageInfo.TEMPORARY, function(used, remaining) {
+console.log("Used quota: " + used + ", remaining quota: " + remaining);
+}
+);
+
+// Request Quota (only for File System API)
+<b>webkitStorageInfo</b>.<b>requestQuota</b>(webkitStorageInfo.PERSISTENT, 10 * 1024 * 1024, function(used) {
+console.log("Used quota: " + used + ", remaining quota: " + remaining);
+}
+);</pre>
+    <table border="0" cellspacing="5" cellpadding="5">
+      <tr><th></th><th>Default (Temporary)</th><th>Quota Requested (Persistent)</th></tr>
+      <tr><td>Web Storage</td><td>5Mb</td><td rowspan="4">N/A</td></tr>
+      <tr><td>App Cache</td><td rowspan="4">10% of available disk in total<div class="quota-info-bubble"><button id="temp-query">Show Usage</button><span>Used: <output>--</output> Bytes</span><span>Remaining: <output>--</output> Bytes</span></div></td></tr>
+      <tr><td>IndexedDB</td></tr>
+      <tr><td>WebSQL</td></tr>
+      <tr><td>File System API</td><td>Arbitrary<div class="quota-info-bubble"><input id="requested-quota" type="text" placeholder="Request quota amount..."/> in Bytes <button id="perm-request" style="margin-left: 5px">Request Quota</button><span>Used: <output>--</output> Bytes</span></div></td></tr>
+    </table>
+  </section>
+  <script>
+    (function() {
+      var outputs = document.querySelectorAll('#quota-api output');
+      document.querySelector('#temp-query').addEventListener(
+        'click', function() {
+          webkitStorageInfo.queryUsageAndQuota(
+              webkitStorageInfo.TEMPORARY,
+              function(used, remaining) {
+                outputs[0].textContent = used;
+                outputs[1].textContent = remaining;
+              }, function(error) { alert(error) });
+
+        }, false);
+
+      document.querySelector('#perm-request').addEventListener(
+        'click', function() {
+          webkitStorageInfo.requestQuota(
+              webkitStorageInfo.PERSISTENT,
+              document.querySelector('#requested-quota').value,
+              function(used) {
+                outputs[2].textContent = used;
+              }, function(error) { alert(error) });
+
+        }, false);
+    }())
+  </script>
+</div>

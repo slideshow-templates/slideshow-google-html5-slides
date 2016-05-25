@@ -8,6 +8,9 @@ For testing see [`test.html`](http://slideshow-templates.github.io/slideshow-goo
 [`test.html5rocks.html`](http://slideshow-templates.github.io/slideshow-google-html5-slides/test.html5rocks.html), and
 [`test.html5rocks_a.html`](http://slideshow-templates.github.io/slideshow-google-html5-slides/test.html5rocks_a.html).
 
+For the original HTML5 Rocks slides see
+[`attic/test.html5rocks.html`](http://slideshow-templates.github.io/slideshow-google-html5-slides/attic/test.html5rocks.html)
+
 
 
 ## What's Slide Show (S9)?

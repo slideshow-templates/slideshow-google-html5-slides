@@ -539,16 +539,12 @@ if (!Function.prototype.bind) {
   // Initialize
   var li_array = [];
   var transitionSlides = queryAll('.transitionSlide').forEach(function(el) {
-    var h1 = query('h1', el);
-    if (!h1) {
-      return;
-    }
     li_array.push( ['<li><a data-hash="', el.id, '">',
-                    query('h1', el).textContent, '</a></li>'].join('')
+                    query('h2', el).textContent, '</a><img src="',
+                    query('img', el).src.replace(/64/g, '32'),
+                    '"/></li>'].join('')
                  );
   });
-
-  query('#toc-list').innerHTML = li_array.join('');
 
   var slideshow = new SlideShow(queryAll('.slide'));
   
@@ -556,9 +552,15 @@ if (!Function.prototype.bind) {
     query('.slides').style.display = 'block';
   }, false);
 
-  queryAll('#toc-list li a').forEach(function(el) {
-      el.onclick = function() { slideshow.go(el.dataset['hash']); };
-  });
+  var toc_list = query('#toc-list');
+  if (toc_list) {
+    toc_list.innerHTML = li_array.join('');
+    queryAll('li a', toc_list).forEach(function(el) {
+      el.onclick = function() {
+          slideshow.go(el.dataset['hash']);
+      };
+    });
+  }
 
   queryAll('pre').forEach(function(el) {
     addClass(el, 'prettyprint');
