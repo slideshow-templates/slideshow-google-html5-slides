@@ -1,0 +1,239 @@
+<div class="slide transitionSlide" id="semantics-markup-title">
+  <section class="middle">
+    <h2>Semantics &amp; Markup</h2>
+    <p>More meaningful elements</p>
+    <img src="http://www.html5rocks.com/static/images/identity/classes_64/HTML5_Semantics_64.png" title="HTML5 Semantics &amp; Markup" alt="HTML5 Semantics &amp; Markup">
+  </section>
+</div>
+
+<div class="slide semantics" id="semantic-tags-1">
+  <header><span class="html">HTML</span> <h1>Better semantic tags</h1></header>
+  <section>
+    <pre class="two-column">&lt;body&gt;
+&lt;<b>header</b>&gt;
+&lt;<b>hgroup</b>&gt;
+&lt;h1&gt;Page title&lt;/h1&gt;
+&lt;h2&gt;Page subtitle&lt;/h2&gt;
+&lt;/hgroup&gt;
+&lt;/header&gt;
+
+&lt;<b>nav</b>&gt;
+&lt;ul&gt;
+Navigation...
+&lt;/ul&gt;
+&lt;/nav&gt;
+&lt;<b>section</b>&gt;
+&lt;<b>article</b>&gt;
+&lt;<b>header</b>&gt;
+&lt;h1&gt;Title&lt;/h1&gt;
+&lt;/header&gt;
+&lt;section&gt;
+Content...
+&lt;/section&gt;
+&lt;/article&gt;
+&lt;article&gt;
+&lt;header&gt;
+&lt;h1&gt;Title&lt;/h1&gt;
+&lt;/header&gt;
+&lt;section&gt;
+Content...
+&lt;/section&gt;
+&lt;/article&gt;
+&lt;/section&gt;
+
+&lt;<b>aside</b>&gt;
+Top links...
+&lt;/aside&gt;
+
+&lt;<b>figure</b>&gt;
+&lt;img src="..."/&gt;
+&lt;<b>figcaption</b>&gt;Chart 1.1&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;<b>footer</b>&gt;
+Copyright &copy;<br>   &lt;<b>time</b> <b>datetime</b>="2010-11-08"&gt;2010&lt;/time&gt;.
+&lt;/footer&gt;
+&lt;/body&gt;
+</pre>
+  </section>
+</div>
+
+<div class="slide semantics" id="semantic-tags-2">
+  <header><span class="html">HTML</span> <h1>Markup for applications</h1></header>
+  <section>
+    <pre>
+&lt;input <b>list</b>="cars"/&gt;
+&lt;<b>datalist</b> id="cars"&gt;
+&lt;option value="BMW"/&gt;
+&lt;option value="Ford"/&gt;
+&lt;option value="Volvo"/&gt;
+&lt;/<b>datalist</b>&gt;
+<input id="cars-input" placeholder="You should see an autocomplete menu as you type" list="cars" />
+<datalist id="cars">
+<option value="BMW" />
+<option value="Ford" />
+<option value="Volvo" />
+</datalist>
+&lt;<b>menu</b>&gt;
+&lt;<b>command</b> type="command" disabled label="Publish" /&gt;
+&lt;/<b>menu</b>&gt;
+
+&lt;<b>details</b>&gt;
+&lt;<b>summary</b>&gt;HTML 5&lt;/<b>summary</b>&gt;
+This slide deck teaches you everything you need to know about HTML 5.
+&lt;<b>/details</b>&gt;
+<details><summary>HTML 5</summary>This slide deck teaches you everything you need to know about HTML 5.</details>
+</pre>
+
+<pre>&lt;<b>meter</b> <b>min</b>="0" <b>max</b>="100" <b>low</b>="40" <b>high</b>="90" <b>optimum</b>="100" value="91"&gt;A+&lt;/<b>meter</b>&gt;
+Your score is: <meter value="91" min="0" max="100" low="40" high="90" optimum="100">A+</meter><br>
+&lt;<b>progress</b>&gt;working...&lt;/<b>progress</b>&gt;
+Download is: <progress>working...</progress><br>
+&lt;<b>progress</b> value="75" <b>max</b>="100"&gt;3/4 complete&lt;/<b>progress</b>&gt;
+Goal is: <progress value="75" max="100">3/4 complete</progress>
+</pre>
+
+  </section>
+</div>
+
+<div class="slide semantics" id="link-relations">
+  <header><span class="html">HTML</span> <h1>Descriptive link relations</h1></header>
+  <section>
+    <pre>&lt;link <b>rel="alternate"</b> type="application/rss+xml" href="http://myblog.com/feed"/&gt;
+&lt;link <b>rel="icon"</b> href="/favicon.ico"/&gt;
+&lt;link <b>rel="pingback"</b> href="http://myblog.com/xmlrpc.php"/&gt;
+&lt;link <b>rel="prefetch"</b> href="http://myblog.com/main.php"/&gt;
+...
+
+&lt;a <b>rel="archives"</b> href="http://myblog.com/archives"&gt;<span class="underlined">old posts</span>&lt;/a&gt;
+&lt;a <b>rel="external"</b> href="http://notmysite.com"&gt;<span class="underlined">tutorial</span>&lt;/a&gt;
+&lt;a <b>rel="license"</b> href="http://www.apache.org/licenses/LICENSE-2.0"&gt;<span class="underlined">license</span>&lt;/a&gt;
+&lt;a <b>rel="nofollow"</b> href="http://notmysite.com/sample"&gt;<span class="underlined">wannabe</span>&lt;/a&gt;
+&lt;a <b>rel="tag"</b> href="http://myblog.com/category/games"&gt;<span class="underlined">games posts</span>&lt;/a&gt;
+...
+</pre>
+
+  </section>
+</div>
+
+<div class="slide semantics" id="microdata">
+  <header><span class="html">HTML</span> <h1>Microdata</h1></header>
+
+  <section>
+    <pre>&lt;div <b>itemscope itemtype="http://example.org/band"</b>&gt;
+&lt;p&gt;My name is &lt;span <b>itemprop="name"</b>&gt;Neil&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;My band is called &lt;span <b>itemprop="band"</b>&gt;Four Parts Water&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;I am &lt;span <b>itemprop="nationality"</b>&gt;British&lt;/span&gt;.&lt;/p&gt;
+&lt;/div&gt;
+</pre>
+    <figure>
+      <img id="microdata-screenshot" src="src/magpie.png" alt="Google Rich Snippets Tool screenshot" />
+      <figcaption>Rich Snippets Testing Tool at <a href="http://www.google.com/webmasters/tools/richsnippets">http://www.google.com/webmasters/tools/richsnippet</a></figcaption>
+    <figure>
+  </section>
+</div>
+
+
+<div class="slide semantics" id="aria-attributes">
+  <header><span class="html">HTML</span> <h1>ARIA attributes</h1></header>
+  <section>
+    <pre>&lt;ul id="tree1"
+<b>role</b>="<b>tree</b>"
+tabindex="0"
+<b>aria-labelledby</b>="label_1">
+&lt;li <b>role</b>="<b>treeitem</b>" tabindex="-1" <b>aria-expanded</b>="true">Fruits&lt;/li>
+&lt;li <b>role</b>="<b>group</b>">
+&lt;ul>
+&lt;li <b>role</b>="<b>treeitem</b>" tabindex="-1">Oranges&lt;/li>
+&lt;li <b>role</b>="<b>treeitem</b>" tabindex="-1">Pineapples&lt;/li>
+...
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+</pre>
+  </section>
+</div>
+
+<div class="slide semantics" id="new-form-types">
+  <header><span class="html">HTML</span> <h1>New form types</h1></header>
+
+  <section>
+    <pre>
+&lt;style&gt;
+[required] {
+border-color: #88a;
+-webkit-box-shadow: 0 0 3px rgba(0, 0, 255, .5);
+}
+:invalid {
+border-color: #e88;
+-webkit-box-shadow: 0 0 5px rgba(255, 0, 0, .8);
+}
+&lt;/style&gt;
+</pre>
+<pre class="form-inputs">
+<input type="text" required />&lt;input type="text" <b>required</b> /&gt;
+
+<input type="email" value="some@email.com" />&lt;input type="<b>email</b>" value="some@email.com" /&gt;
+
+<input type="date" min="2010-08-14" max="2011-08-14" value="2010-08-14" />&lt;input type="<b>date</b>" <b>min</b>="2010-08-14" <b>max</b>="2011-08-14" value="2010-08-14"/&gt;
+
+<input type="range" min="0" max="50" value="10" />&lt;input type="<b>range</b>" <b>min</b>="0" <b>max</b>="50" value="10" /&gt;
+
+<input results="10" type="search" placeholder="Search..." />&lt;input type="<b>search</b>" <b>results</b>="10" <b>placeholder</b>="Search..." /&gt;
+
+<input type="tel" placeholder="(555) 555-5555" pattern="^\(?\d{3}\)?[-\s]\d{3}[-\s]\d{4}.*?$" />&lt;input type="<b>tel</b>"  <b>placeholder</b>="(555) 555-5555"
+ <b>pattern</b>="^\(?\d{3}\)?[-\s]\d{3}[-\s]\d{4}.*?$" /&gt;
+
+<input type="color" placeholder="e.g. #bbbbbb" />&lt;input type="<b>color</b>" <b>placeholder</b>="e.g. #bbbbbb" /&gt;
+
+<input type="number" step="1" min="-5" max="10" value="0" />&lt;input type="<b>number</b>" <b>step</b>="1" <b>min</b>="-5" <b>max</b>="10" value="0" /&gt;
+<div style="height:0px; clear:both;">
+</pre>
+  </section>
+</div>
+
+<div class="slide semantics" id="form-types-mobile">
+  <header><span class="html">HTML</span> <h1>Form field types on mobile</h1></header>
+  <style type="text/css" media="screen">
+    #form-types-mobile div {
+      float: left;
+      width: 24%;
+      padding-right: 1%;
+      text-align: center;
+    }
+    #form-types-mobile img {
+      width: 90%;
+      -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0 4px 6px;
+    }
+  </style>
+  <section>
+    <div>
+<pre>type="<em>text</em>"</pre>
+      <figure>
+        <img src="src/android-form-text.png" alt="android keyboard on input type text" />
+        <figcaption>Android Device</figcaption>
+      </figure>
+    </div>
+    <div>
+<pre>type="<em>number</em>"</pre>
+      <figure>
+        <img src="src/android-form-number.png" alt="android keyboard on input type number" />
+        <figcaption>Android Device</figcaption>
+      </figure>
+    </div>
+    <div>
+<pre>type="<em>email</em>"</pre>
+      <figure>
+        <img src="src/iphone-form-email.png" alt="iphone keyboard on input type email" />
+        <figcaption>iPhone Device</figcaption>
+      </figure>
+    </div>
+    <div>
+<pre>type="<em>tel</em>"</pre>
+      <figure>
+        <img src="src/iphone-form-tel.png" alt="iphone keyboard on input type tel" />
+        <figcaption>iPhone Device</figcaption>
+      </figure>
+    </div>
+  </section>
+</div>

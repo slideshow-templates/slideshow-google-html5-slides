@@ -1,0 +1,738 @@
+<div class="slide transitionSlide" id="css3-title">
+  <section class="middle">
+    <h2>CSS3</h2>
+    <p>Presentation &amp; Styling</p>
+    <img src="http://www.html5rocks.com/static/images/identity/classes_64/HTML5_Styling_64.png" title="HTML5 Styling" alt="HTML5 Styling">
+  </section>
+</div>
+
+<div class="slide styling" id="css-selectors">
+  <header><span class="css">CSS</span> <h1>CSS Selectors</h1></header>
+  <section class="left">
+    <h2>Selectors</h2>
+<pre>.row:<b>nth-child(even)</b> {
+background: #dde;
+}
+.row:<b>nth-child(odd)</b> {
+background: white;
+}
+</pre>
+    <div class="example">
+      <div class="row">Row 1</div>
+      <div class="row">Row 2</div>
+      <div class="row">Row 3</div>
+      <div class="row">Row 4</div>
+    </div>
+    <h2>Image-like display</h2>
+    <pre>div {
+display: <b>inline-block</b>;
+}
+</pre>
+  </section>
+
+  <section class="right">
+    <h2>Specific attributes</h2>
+    <pre>input<b>[type="text"]</b> {
+background: #eee;
+}</pre>
+
+    <h2>Negation</h2>
+    <pre><b>:not</b>(.box) {
+color: #00c;
+}
+<b>:not</b>(span) {
+display: block;
+}
+</pre>
+
+    <h2>More specific targetting</h2>
+    <pre>h2:<b>first-child</b> { ... }
+
+div.text <b>&gt;</b> div { ... }
+h2 <b>+</b> header { ... }
+</pre>
+  </section>
+  <footer><a href="http://www.w3.org/TR/CSS2/selector.html#pattern-matching">CSS2 selectors</a> and <a href="http://www.w3.org/TR/css3-selectors/#selectors">CSS3 selectors</a> introduced some of the ones demonstrated here.</footer>
+</div>
+
+
+<div class="slide styling" id="web-fonts">
+  <header><span class="css">CSS</span> <h1>Webfonts</h1></header>
+  <section>
+
+    <pre><b>@font-face</b> {
+font-family: 'LeagueGothic';
+src: url(LeagueGothic.otf);
+}
+
+<b>@font-face</b> {
+font-family: 'Droid Sans';
+src: url(Droid_Sans.ttf);
+}
+
+header {
+font-family: 'LeagueGothic';
+}</pre>
+
+    <div id="fontface-sample" class="example">
+      <span>LeagueGothic font with no image replacement</span>
+    </div>
+
+  </section>
+</div>
+
+
+<div class="slide styling" id="text-wrapping">
+  <header><span class="css">CSS</span> <h1>Text wrapping</h1></header>
+  <section>
+    <pre>div {
+<b>text-overflow: ellipsis;</b>
+}</pre>
+
+    <div id="wrapping">
+      <div id="overflow-hidden" class="example">
+        A long cold winter delayed the blossoming of the millions of cherry, apricot, peach, and prune plum trees covering hundreds of square miles of the Valley floor. Then, unlike many years, the rains that followed were light and too early to knock the blossoms from their branches.
+      </div>
+      <div id="no-wrap" class="example">
+        A long cold winter delayed the blossoming of the millions of cherry, apricot, peach, and prune plum trees covering hundreds of square miles of the Valley floor. Then, unlike many years, the rains that followed were light and too early to knock the blossoms from their branches.
+      </div>
+      <div id="ellipsis" class="example">
+        A long cold winter delayed the blossoming of the millions of cherry, apricot, peach, and prune plum trees covering hundreds of square miles of the Valley floor. Then, unlike many years, the rains that followed were light and too early to knock the blossoms from their branches.
+      </div>
+    </div>
+    <input type="range" min="0" max="100" value="95" onchange="changeWrapping(event)">
+    <p class="center">
+      Play with the slider on this and further pages!
+    </p>
+  </section>
+
+  <script defer>
+    function changeWrapping(event) {
+      document.getElementById('wrapping').style.width = event.target.value + '%';
+    }
+  </script>
+</div>
+
+
+
+<div class="slide styling" id="css-columns">
+  <header><span class="css">CSS</span> <h1>Columns</h1></header>
+  <section>
+    <pre>-webkit-<b>column-count</b>: <span id="columns-no-value">2</span>; <input type="range" min="1" max="6" value="2" onchange="changeColumnNoSlider(event)">
+-webkit-<b>column-rule</b>: 1px solid #bbb;
+-webkit-<b>column-gap</b>: 2em;</pre>
+
+    <div id="columns-no-example" class="example">
+      <p>
+        In March 1936, an unusual confluence of forces occurred in
+        Santa Clara County.
+      </p>
+      <p>
+        A long cold winter delayed the blossoming of the millions of
+        cherry, apricot, peach, and prune plum trees covering hundreds
+        of square miles of the Valley floor. Then, unlike many years,
+        the rains that followed were light and too early to knock
+        the blossoms from their branches.
+      </p>
+      <p>
+        Instead, by the billions, they all burst open at once.
+        Seemingly overnight, the ocean of green that was the Valley
+        turned into a low, soft, dizzyingly perfumed cloud of pink
+        and white. Uncounted bees and yellow jackets, newly born,
+        raced out of their hives and holes, overwhelmed by this
+        impossible banquet.
+      </p>
+      <p>
+        Then came the wind.
+      </p>
+      <p>
+        It roared off the Pacific Ocean, through the nearly
+        uninhabited passes of the Santa Cruz Mountains and then,
+        flattening out, poured down into the great alluvial plains
+        of the Valley. A tidal bore of warm air, it tore along the
+        columns of trees, ripped the blossoms apart and carried them
+        off in a fluttering flood of petals like foam rolling up a
+        beach.
+      </p>
+      <p>
+        This perfumed blizzard hit Stevens Creek Boulevard, a two-lane
+        road with a streetcar line down its center, that was the main
+        road in the West Valley. It froze traffic, as drivers found
+        themselves lost in a soft, muted whiteout. Only the streetcar,
+        its path predetermined, passed on...
+      </p>
+    </div>
+  </section>
+
+  <script defer>
+    function changeColumnNoSlider(event) {
+      var val = event.target.value;
+      document.getElementById('columns-no-value').textContent = val;
+      var el = document.getElementById('columns-no-example');
+      el.style.webkitColumnCount = val;
+      el.style.MozColumnCount = val;
+      el.style.columnCount = val;
+    }
+  </script>
+</div>
+
+
+<div class="slide styling" id="css-stroke">
+  <header><span class="css">CSS</span> <h1>Text stroke</h1></header>
+  <section>
+<pre>div {
+-webkit-<b>text-fill-color</b>: black;
+-webkit-<b>text-stroke-color</b>: red;
+-webkit-<b>text-stroke-width</b>: <span id="text-stroke-value">0.00</span>px; <input id="text-stroke" type="range" min="0" max="50" value="0" onchange="changeTextStroke()">
+}</pre>
+
+    <div id="text-stroke-example" class="example">
+      Text stroke example
+    </div>
+
+    <script defer>
+      function changeTextStroke() {
+        var width = (document.getElementById('text-stroke').value * 0.25).toFixed(2);
+        document.getElementById('text-stroke-example').style.webkitTextStrokeWidth = width + 'px';
+        document.getElementById('text-stroke-value').textContent = width;
+      }
+    </script>
+  </section>
+</div>
+
+
+<div class="slide styling" id="css-opacity">
+  <header><span class="css">CSS</span> <h1>Opacity</h1></header>
+  <section>
+
+<pre>  color: <b>rgba</b>(255, 0, 0, <span id="opacity-color-value">0.75</span>); <input id="opacity-color" type="range" min="0" max="100" value="75" onchange="changeOpacity()">
+background: <b>rgba</b>(0, 0, 255, <span id="opacity-background-value">0.75</span>); <input id="opacity-background" type="range" min="0" max="100" value="75" onchange="changeOpacity()">
+</pre>
+
+    <div id="opacity-body">
+      <div id="opacity-example">
+        Independent opacity
+      </div>
+    </div>
+
+    <script defer>
+      function changeOpacity() {
+        var textOpacity = (document.getElementById('opacity-color').value / 100).toFixed(2);
+        var backgroundOpacity = (document.getElementById('opacity-background').value / 100).toFixed(2);
+
+        var el = document.getElementById('opacity-example');
+
+        el.style.color = 'rgba(255, 0, 0, ' + textOpacity + ')';
+        el.style.background = 'rgba(0, 0, 255, ' + backgroundOpacity + ')';
+
+        document.getElementById('opacity-color-value').textContent = textOpacity;
+        document.getElementById('opacity-background-value').textContent = backgroundOpacity;
+      }
+
+      changeOpacity();
+    </script>
+  </section>
+
+</div>
+
+<div class="slide styling" id="css-color">
+  <header><span class="css">CSS</span> <h1>Hue/saturation/luminance color</h1></header>
+  <section>
+<pre>color: <b>hsla</b>(
+<span class="hsl-value" id="hsl-h-value">128</span> <input id="hsl-h" type="range" min="0" max="360" value="128" onchange="changeHSL()">
+<span class="hsl-value" id="hsl-s-value">74%</span> <input id="hsl-s" type="range" min="0" max="100" value="75" onchange="changeHSL()">
+<span class="hsl-value" id="hsl-l-value">33%</span> <input id="hsl-l" type="range" min="0" max="100" value="33" onchange="changeHSL()">
+<span class="hsl-value" id="hsl-a-value">1.00</span> <input id="hsl-a" type="range" min="0" max="100" value="100" onchange="changeHSL()">
+</pre>
+
+    <div id="hsl-example" class="example">
+      HSL example
+    </div>
+
+    <script defer>
+      function changeHSL() {
+        var h = document.getElementById('hsl-h').value * 1.0;
+        var s = document.getElementById('hsl-s').value * 1.0;
+        var l = document.getElementById('hsl-l').value * 1.0;
+        var a = (document.getElementById('hsl-a').value / 100).toFixed(2);
+        var el = document.getElementById('hsl-example');
+
+        el.style.color = 'hsla(' + h + ', ' + s + '%, ' + l + '%, ' + a + ')';
+
+        document.getElementById('hsl-h-value').textContent = h;
+        document.getElementById('hsl-s-value').textContent = s + '%,';
+        document.getElementById('hsl-l-value').textContent = l + '%,';
+        document.getElementById('hsl-a-value').textContent = a + ');';
+      }
+
+      changeHSL();
+    </script>
+  </section>
+</div>
+
+
+ <div class="slide styling" id="rounded-corners">
+  <header><span class="css">CSS</span> <h1>Rounded corners</h1></header>
+  <section>
+    <pre>
+      face: <b>border-radius</b>: <span id="face-rounded-border-value">0</span>px; <input id="face-rounded-border" type="range" min="0" max="146" value="0" onchange="handleCorner(event)">
+      left eye: <b>border-radius</b>: <span id="lefteye-rounded-border-value">0</span>px; <input id="lefteye-rounded-border" type="range" min="0" max="35" value="0" onchange="handleCorner(event)">
+      right eye: <b>border-radius</b>: <span id="righteye-rounded-border-value">0</span>px; <input id="righteye-rounded-border" type="range" min="0" max="35" value="0" onchange="handleCorner(event)">
+      base white: <b>border-radius</b>: <span id="base_white-rounded-border-value">0</span>px; <input id="base_white-rounded-border" type="range" min="0" max="150" value="0" onchange="handleCorner(event)">
+      mouth: <b>border-radius</b>: <span id="mouth-rounded-border-value">0</span>px; <input id="mouth-rounded-border" type="range" min="0" max="120" value="0" onchange="handleCorner(event)">
+      nose: <b>border-radius</b>: <span id="nose-rounded-border-value">0</span>px; <input id="nose-rounded-border" type="range" min="0" max="50" value="0" onchange="handleCorner(event)">
+      left black eye: <b>border-radius</b>: <span id="leftblackeye-rounded-border-value">0</span>px; <input id="leftblackeye-rounded-border" type="range" min="0" max="35" value="0" onchange="handleCorner(event)">
+      right black eye: <b>border-radius</b>: <span id="rightblackeye-rounded-border-value">0</span>px; <input id="rightblackeye-rounded-border" type="range" min="0" max="35" value="0" onchange="handleCorner(event)">
+    </pre>
+    <div id="doraemon" class="example">
+      <iframe _src="src/rounded/write_doraemon.html"></iframe>
+    </div>
+    <script>
+      function handleCorner() {
+        var doraemon = document.querySelector('#doraemon iframe').contentWindow.document;
+         var elements = ["face", "lefteye", "righteye", "base_white", "mouth", "nose", "leftblackeye", "rightblackeye"];
+         for (var i = 0; i < elements.length; i++) {
+           var element = elements[i] + '-rounded-border';
+           var borderVal = document.getElementById(element).value;
+           document.getElementById(element + '-value').textContent = borderVal;
+           var faceEl = doraemon.getElementById(elements[i]);
+           faceEl.style.borderRadius = borderVal + 'px';
+           faceEl.style.mozBorderRadius = borderVal + 'px';
+         }
+       }
+    </script>
+  </section>
+</div>
+
+
+<div class="slide styling" id="css-gradients">
+  <header><span class="css">CSS</span> <h1>Gradients</h1></header>
+
+  <section>
+    <pre>background-image: <b>linear-gradient</b>(top, <span style="text-shadow: #00abeb 0 0 1px; color: #00abeb">#00abeb</span> 0%, #fff 50%,
+                    <span style="text-shadow: #00abeb 0 0 1px; color: #66cc00">#66cc00</span> 50%, #fff 100%);
+</pre>
+    <div id="gradients-linear-example" class="example"></div>
+<br />
+<pre>background-image: <b>radial-gradient</b>(center, circle cover, red, #000 <span id="gradients-radial-value">40</span>%);
+                                                <input id="gradients-radial" type="range" min="1" max="100" value="40" onchange="changeGradients(event)">
+</pre>
+    <div id="gradients-radial-example" class="example"></div>
+
+    <script defer>
+      function changeGradients() {
+        var size = document.getElementById('gradients-radial').value;
+
+        document.getElementById('gradients-radial-example').style.backgroundImage =
+            '-webkit-radial-gradient(center, circle cover, red, #000 ' + size + '%)';
+
+        document.getElementById('gradients-radial-value').textContent = size;
+      }
+    </script>
+  </section>
+</div>
+
+<div class="slide styling" id="css-shadow">
+  <header><span class="css">CSS</span> <h1>Shadows</h1></header>
+  <section>
+<pre class="two-column"><b>text-shadow</b>:
+rgba(64, 64, 64, 0.5)
+<span id="shadows-text-x-value">0</span>px <input id="shadows-text-x" type="range" min="-9" max="9" value="0" onchange="changeShadow(event)">
+<span id="shadows-text-y-value">0</span>px <input id="shadows-text-y" type="range" min="-9" max="9" value="0" onchange="changeShadow(event)">
+<span id="shadows-text-size-value">0</span>px; <input id="shadows-text-size" type="range" min="0" max="9" value="0" onchange="changeShadow(event)">
+<br><b>box-shadow</b>:
+rgba(0, 0, 128, 0.25)
+<span id="shadows-box-x-value">0</span>px <input id="shadows-box-x" type="range" min="-9" max="9" value="0" onchange="changeShadow(event)">
+<span id="shadows-box-y-value">0</span>px <input id="shadows-box-y" type="range" min="-9" max="9" value="0" onchange="changeShadow(event)">
+<span id="shadows-box-size-value">0</span>px; <input id="shadows-box-size" type="range" min="0" max="9" value="0" onchange="changeShadow(event)">
+    </pre>
+
+    <div id="shadow-example" class="example">
+      Shadows example
+    </div>
+
+  </section>
+
+  <script defer>
+    function changeShadow() {
+      var el = document.getElementById('shadow-example');
+
+      var textXVal = document.getElementById('shadows-text-x').value;
+      var textYVal = document.getElementById('shadows-text-y').value;
+      var textSizeVal = document.getElementById('shadows-text-size').value;
+
+      document.getElementById('shadows-text-x-value').textContent = textXVal;
+      document.getElementById('shadows-text-y-value').textContent = textYVal;
+      document.getElementById('shadows-text-size-value').textContent = textSizeVal;
+
+      var boxXVal = document.getElementById('shadows-box-x').value;
+      var boxYVal = document.getElementById('shadows-box-y').value;
+      var boxSizeVal = document.getElementById('shadows-box-size').value;
+
+      document.getElementById('shadows-box-x-value').textContent = boxXVal;
+      document.getElementById('shadows-box-y-value').textContent = boxYVal;
+      document.getElementById('shadows-box-size-value').textContent = boxSizeVal;
+
+      el.style.textShadow = 'rgba(64, 64, 64, 0.5) ' + textXVal + 'px ' + textYVal + 'px ' + textSizeVal + 'px';
+      el.style.webkitBoxShadow = 'rgba(0, 0, 128, 0.25) ' + boxXVal + 'px ' + boxYVal + 'px ' + boxSizeVal + 'px';
+      el.style.MozBoxShadow = 'rgba(0, 0, 128, 0.25) ' + boxXVal + 'px ' + boxYVal + 'px ' + boxSizeVal + 'px';
+    }
+  </script>
+</div>
+
+
+<div class="slide styling" id="logo-demo">
+  <header><span class="css">CSS</span> <h1>Instant Web 2.0 (just add sliders)</h1></header>
+  <section>
+    <pre><b>text-shadow</b>: rgba(0, 0, 0, 0.5) 0 <span id="web20-shadow-value-1">0</span>px <span id="web20-shadow-value-2">0</span>px; <input id="web20-shadow" type="range" min="0" max="9" value="0" onchange="changeWeb20(event)">
+
+background:
+-<b>webkit-gradient</b>(linear, left top, left bottom, <input id="web20-gradient" type="range" min="0" max="100" value="0" onchange="changeWeb20(event)">
+           from(rgba(200, 200, 240, <span id="web20-gradient-value-1">0</span>)), to(rgba(255, 255, 255, <span id="web20-gradient-value-2">0</span>)));
+
+<b>border-radius</b>: <span id="web20-border-value">0</span>px; <input id="web20-border" type="range" min="0" max="50" value="0" onchange="changeWeb20(event)">
+
+-webkit-<b>box-reflect</b>: below 10px
+-webkit-gradient(linear, left top, left bottom, <input id="web20-reflect" type="range" min="0" max="100" value="0" onchange="changeWeb20(event)">
+           from(transparent), to(rgba(255, 255, 255, <span id="web20-reflect-value">0</span>)));
+</pre>
+
+    <div class="example">
+      <div id="logo-container">
+        <div id="web20-google">
+          Web 2.0 Logo Creatr
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <script defer>
+    function changeWeb20() {
+      var el = document.getElementById('web20-google');
+
+      var textShadowVal = document.getElementById('web20-shadow').value;
+      document.getElementById('web20-shadow-value-1').textContent = textShadowVal;
+      document.getElementById('web20-shadow-value-2').textContent = textShadowVal;
+
+      var gradientVal = document.getElementById('web20-gradient').value / 100;
+      document.getElementById('web20-gradient-value-1').textContent = gradientVal;
+      document.getElementById('web20-gradient-value-2').textContent = gradientVal;
+
+      var borderVal = document.getElementById('web20-border').value;
+      document.getElementById('web20-border-value').textContent = borderVal;
+
+      var reflectVal = document.getElementById('web20-reflect').value / 100;
+      document.getElementById('web20-reflect-value').textContent = reflectVal;
+
+      el.style.textShadow = 'rgba(0, 0, 0, 0.5) 0 ' + textShadowVal + 'px ' + textShadowVal + 'px';
+      el.style.background = '-webkit-gradient(linear, left top, left bottom, from(rgba(200, 200, 240, ' + gradientVal + ')), to(rgba(255, 255, 255, ' + gradientVal + ')))';
+      el.style.borderRadius = borderVal + 'px';
+      el.style.webkitBoxReflect = 'below 10px -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(255, 255, 255, ' + reflectVal + ')))';
+    }
+  </script>
+</div>
+
+
+<div class="slide styling" id="css-background">
+
+  <header><span class="css">CSS</span> <h1>Background enhancements</h1></header>
+  <section>
+    <h2>Background sizing</h2>
+    <pre>#logo {
+background: url(logo.gif) center center no-repeat;
+<b>background-size:
+<select onchange="changeBackgroundSize(event)">
+<option>auto</option>
+<option>contain</option>
+<option>cover</option>
+<option>100%</option>
+</select>;</b>
+}
+</pre>
+    <textarea id="background-textarea"></textarea>
+    <p id="resize-message">Resize me! »</p>
+    <h2>Multiple backgrounds</h2>
+    <pre>div {
+background: url(src/zippy-plus.png) 10px center no-repeat,
+      url(src/gray_lines_bg.png) 0 center repeat-x;
+}
+    </pre>
+
+    <div id="background-example" class="example">Test</div>
+    <script defer>
+      function changeBackgroundSize(event) {
+        document.getElementById('background-textarea').style.backgroundSize = event.target.value;
+      }
+    </script>
+  </section>
+</div>
+
+<div class="slide styling" id="border-image">
+  <header><span class="css">CSS</span> <h1>Border image</h1></header>
+  <section>
+<pre><div class="img-frame selected" onclick="changeBorderImageSource(event)"><img id="border_image_1" src="src/borderimage/border_image_1.png" width="100" height="100" alt="Border image No.1" />
+</div><div class="img-frame" onclick="changeBorderImageSource(event)"><img id="border_image_2" src="src/borderimage/border_image_2.png" width="100" height="100" alt="Border image No.2" />
+</div><div class="img-frame" onclick="changeBorderImageSource(event)"><img id="border_image_3" src="src/borderimage/border_image_3.png" width="100" height="100" alt="Border image No.3" />
+</div><div class="img-frame" onclick="changeBorderImageSource(event)"><img id="border_image_4" src="src/borderimage/border_image_4.png" width="100" height="100" alt="Border image No.4" />
+</div><div class="img-frame" onclick="changeBorderImageSource(event)"><img id="border_image_5" src="src/borderimage/border_image_5.png" width="100" height="100" alt="Border image No.5" />
+</div><div style="clear:both;"></div>
+-webkit-<b>border-image</b>: url(<span id="border_image_name">border_image_1</span>.png)</span> <select onchange="changeBorderImage()">
+<option value="20%">20%</option>
+<option value="40%">40%</option>
+<option value="15">15</option>
+<option value="33">33</option>
+<option value="50">50</option>
+</select> <select onchange="changeBorderImage()">
+<option value="stretch">stretch</option>
+<option value="repeat">repeat</option>
+<option value="round">round</option></select> <select onchange='changeBorderImage()'>
+<option value="stretch">stretch</option>
+<option value="repeat">repeat</option>
+<option value="round">round</option></select>;
+border-width: <span id="border_width_value">10</span>px;  <input id="border_width_range" type="range" min="0" max="50" value="10" onchange="changeBorderWidth(event)" /></pre>
+
+    <div class="example">
+      <div id="border-image-example" style="border-width: 10px; -webkit-border-image: url(src/borderimage/border_image_1.png) 20% stretch stretch;">
+      </div>
+    </div>
+    <script defer>
+      changeBorderImage = function() {
+        var imgSrc = document.querySelector('#border-image div.img-frame.selected > img').src;
+        var selectList = document.querySelectorAll('#border-image select');
+        var str = ['url(', imgSrc, ') ', selectList[0].value, ' ',
+                   selectList[1].value, ' ', selectList[2].value,
+                   ';'].join('');
+        var borderWidth = document.getElementById('border_width_range').value;
+        document.getElementById('border-image-example').style.cssText =
+            ['border-width: ', borderWidth,
+             'px; -webkit-border-image: ', str, ' -moz-border-image: ',
+             str, ' border-image: ', str].join('');
+      };
+
+      changeBorderWidth = function(event) {
+        console.log(event.target);
+        document.getElementById('border_width_value').innerHTML = event.target.value;
+        changeBorderImage();
+      };
+
+      changeBorderImageSource = function(event) {
+        var preselected = document.querySelector('#border-image div.img-frame.selected');
+        if (preselected != event.currentTarget) {
+          preselected.classList.remove('selected');
+          event.currentTarget.classList.add('selected');
+          document.getElementById('border_image_name').innerHTML = event.target.id;
+        }
+        changeBorderImage();
+      };
+    </script>
+  </section>
+</div>
+
+
+<div class="slide styling" id="flex-box-1">
+  <header><span class="css">CSS</span> <h1>Flexible Box Model</h1></header>
+  <section>
+<pre>.box {
+display: -webkit-<b>box</b>;
+-webkit-<b>box-orient</b>: <select onchange='changeBoxOrient(event)'>
+<option>horizontal</option>
+<option>vertical</option>
+</select>;
+}
+.box .one, .box .two {
+-webkit-<b>box-flex</b>: 1;
+}
+.box .three {
+-webkit-<b>box-flex</b>: 3;
+}
+</pre>
+
+  <div id="box-orient-example" class="example">
+    <div>
+      Box one
+    </div>
+    <div>
+      Box two
+    </div>
+    <div>
+      Box three
+    </div>
+  </div>
+
+  <script defer>
+    function changeBoxOrient(event) {
+      var el = document.getElementById('box-orient-example');
+      el.style.webkitBoxOrient = event.target.value;
+      el.style.MozBoxOrient = event.target.value;
+    }
+  </script>
+  </section>
+</div>
+
+
+<div class="slide styling" id="flex-box-2">
+  <header><span class="css">CSS</span> <h1>Flexible Box Model</h1></header>
+  <section>
+<pre>.box {
+display: -webkit-<b>box</b>;
+-webkit-<b>box-pack</b>: <select onchange='changeBoxPack(event)'>
+<option>center</option>
+<option>start</option>
+<option>end</option>
+</select>;
+-webkit-<b>box-align</b>: <select onchange='changeBoxAlign(event)'>
+<option>center</option>
+<option>start</option>
+<option>end</option>
+<option>stretch</option>
+</select>;
+}
+</pre>
+
+    <div id="box-orient-example-2" class="example">
+      <textarea>change the dropdowns and resize this &lt;textarea></textarea>
+    </div>
+
+    <script defer>
+      function changeBoxPack(event) {
+        var el = document.getElementById('box-orient-example-2');
+        el.style.webkitBoxPack = event.target.value;
+        el.style.MozBoxPack = event.target.value;
+      }
+      function changeBoxAlign(event) {
+        var el = document.getElementById('box-orient-example-2');
+        el.style.webkitBoxAlign = event.target.value;
+        el.style.MozBoxAlign = event.target.value;
+      }
+    </script>
+
+  </section>
+</div>
+
+
+<div class="slide styling" id="css-transitions">
+  <header><span class="css">CSS</span> <h1>Transitions</h1></header>
+  <section>
+
+  <div class="transitions example">
+    <div id="transitions-box-1"></div>
+  </div>
+
+<pre>#box.left {
+margin-left: 0;
+}
+#box.right {
+margin-left: 1000px;
+}
+
+document.getElementById('box').className = 'left'; <button onclick="transitionLeft(1)">Left</button>
+document.getElementById('box').className = 'right'; <button onclick="transitionRight(1)">Right</button>
+</pre>
+
+  <div class="transitions example">
+    <div id="transitions-box-2"></div>
+  </div>
+
+<pre>#box {
+-webkit-<b>transition</b>: margin-left 1s ease-in-out;
+}
+
+document.getElementById('box').className = 'left'; <button onclick="transitionLeft(2)">Left</button>
+document.getElementById('box').className = 'right'; <button onclick="transitionRight(2)">Right</button>
+</pre>
+
+
+    <script defer>
+      function transitionLeft(no) {
+        document.getElementById('transitions-box-' + no).className = 'left';
+      }
+      function transitionRight(no) {
+        document.getElementById('transitions-box-' + no).className = 'right';
+      }
+    </script>
+  </section>
+</div>
+
+
+<div class="slide styling" id="css-transforms">
+  <header><span class="css">CSS</span> <h1>Transforms</h1></header>
+  <section>
+    <p class="center">
+      Hover over me:
+    </p>
+    <pre id="threed-example">-webkit-<b>transform</b>: <b>rotateY</b>(45deg);
+-webkit-transform: <b>scaleX</b>(25deg);
+-webkit-transform: <b>translate3d</b>(0, 0, 90deg);
+-webkit-transform: <b>perspective</b>(500px)
+</pre>
+
+<pre>#threed-example {
+-webkit-transform: rotateZ(5deg);
+
+-webkit-transition: -webkit-transform 2s ease-in-out;
+}
+#threed-example:hover {
+-webkit-transform: rotateZ(-5deg);
+}
+</pre>
+
+    <p class="center">
+      Now press <span class="key">3</span>!
+    </p>
+  </section>
+</div>
+
+
+<div class="slide styling" id="css-animation">
+  <style>
+    /* put the keyframes rule here cuz ExCss currently doesn't support '@-webkit-keyframes' */
+    @-webkit-keyframes pulse {
+     from {
+       opacity: 0.0;
+       font-size: 50px;
+     }
+     to {
+       opacity: 1.0;
+       font-size: 100px;
+     }
+    }
+
+    #animation-example {
+      -webkit-animation-name: pulse;
+      -webkit-animation-duration: 2s;
+      -webkit-animation-iteration-count: infinite;
+      -webkit-animation-timing-function: ease-in-out;
+      -webkit-animation-direction: alternate;
+    }
+  </style>
+  <header><span class="css">CSS</span> <h1>Animations</h1></header>
+  <section>
+<pre>@-webkit-<b>keyframes</b> <em>pulse</em> {
+<b>from</b> {
+opacity: 0.0;
+font-size: 100%;
+}
+<b>to</b> {
+opacity: 1.0;
+font-size: 200%;
+}
+}
+
+div {
+-webkit-<b>animation-name</b>: <em>pulse</em>;
+-webkit-<b>animation-duration</b>: 2s;
+-webkit-<b>animation-iteration-count</b>: infinite;
+-webkit-<b>animation-timing-function</b>: ease-in-out;
+-webkit-<b>animation-direction</b>: alternate;
+}
+</pre>
+    <p id="animation-note">
+      *Please make a better use of it. We don't want a new blink tag ;)
+    </p>
+
+    <div id="animation-example" class="example">
+      Pulse!
+    </div>
+  </section>
+</div>

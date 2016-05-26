@@ -1,0 +1,102 @@
+<div class="slide transitionSlide" id="nuts-bolts-title">
+   <section class="middle">
+     <h2>Nuts &amp; Bolts</h2>
+     <p>Improvements to the core platform</p>
+     <img src="http://www.html5rocks.com/static/images/identity/classes_64/HTML5_Performance_64.png" title="HTML5 Performance &amp; Integration" alt="HTML5 Performance &amp; Integration">
+   </section>
+ </div>
+
+
+ <div class="slide performance" id="new-selectors">
+   <header><span class="js">JS</span> <h1>New Selectors</h1></header>
+   <section>
+     <h2>Finding elements by class (DOM API)</h2>
+
+     <pre>var el = document.getElementById('section1');
+el.focus();
+
+var els = document.getElementsByTagName('div');
+els[0].focus();
+
+var els = document.<b>getElementsByClassName</b>('section');
+els[0].focus();</pre>
+
+     <h2>Finding elements by CSS syntax (Selectors API)</h2>
+
+     <pre>var els = document.<b>querySelectorAll</b>("ul li:nth-child(odd)");
+var tds = document.<b>querySelectorAll</b>("table.test > tr > td");
+var el = document.<b>querySelector</b>("table.test > tr > td"); // el == tds[0]
+</pre>
+   </section>
+ </div>
+
+
+ <div class="slide performance" id="custom-data">
+   <header><span class="html">HTML</span> <span class="js">JS</span> <h1>Custom data-* attributes</h1></header>
+   <section>
+     <h2>Define, store, and retrieve custom data on the DOM.</h2>
+     <pre>&lt;div id="out" <b>data-id</b>="good" <b>data-name</b>="joe" <b>data-screen-name</b>="user1"&gt;&lt;/div&gt;</pre>
+
+     <pre>
+// Add new data attributes via JS.
+var el = document.querySelector('#out');
+el.setAttribute('<em>data-foo</em>', 'bar');
+
+var html = [];
+for (var key in el.<b>dataset</b>) {
+html.push(key, ': ', el.<b>dataset</b>[key], '&lt;br&gt;');
+}
+
+el.innerHTML = html.join('');
+</pre>
+
+<p>Output:</p>
+<pre>
+id: good
+name: joe
+screenName: user1
+foo: bar
+</pre>
+   </section>
+ </div>
+
+
+ <div class="slide performance" id="class-list">
+   <header><span class="js">JS</span> <h1>Element.classList</h1></header>
+   <section>
+     <pre>&lt;div id="main" class="shadow rounded"&gt;&lt;/div&gt;</pre>
+     <pre>
+var el = document.querySelector('#main').<b>classList</b>;
+el.<b>add</b>('highlight');
+el.<b>remove</b>('shadow');
+el.<b>toggle</b>('highlight');
+
+console.log(el.<b>contains</b>('highlight')); // false
+console.log(el.<b>contains</b>('shadow')); // false
+console.log(el.<b>classList</b>.toString() == el.className); // true
+</pre>
+<p>Output:</p>
+<pre>
+&lt;div id="main" class="rounded"&gt;&lt;/div&gt;
+</pre>
+   </section>
+ </div>
+
+ <div class="slide performance" id="history-api">
+   <header><span class="js">JS</span> <h1>History API</h1></header>
+   <section>
+     <pre>
+link.addEventListener('click', function(event) {
+// manually add a value to the history stack
+// without making the browser load any new page
+<b>history</b>.<b>pushState</b>('Contact Page Form', 'Contact Page', '/contact');
+});
+
+// capture navigation in case we want to change,
+// for instance, some content when it changes
+window.addEventListener('<em>popstate</em>', function(event) {
+document.querySelector('h1').innerHTML = event.<b>state</b>; // 'Contact Page Form'
+});
+</pre>
+   </section>
+ </div>
