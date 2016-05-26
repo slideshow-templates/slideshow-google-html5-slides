@@ -1,0 +1,31 @@
+
+<div class="slide device-access" id="filewriter">
+  <header><span class="js">JS</span> <h1>FileSystem APIs</h1></header>
+  <section>
+
+    <h3>Asynchronously write a file to a sandboxed file system using JavaScript:</h3>
+
+    <pre>
+<b>window.requestFileSystem</b>(<b>window.TEMPORARY</b>, 1024 * 1024, function(fs) {
+
+// fs.root is a DirectoryEntry object.
+<b>fs.root.getFile</b>('log.txt', {create: true}, function(fileEntry) {
+
+<b>fileEntry.createWriter</b>(function(writer) {  // writer is a FileWriter object.
+
+<b>writer.onwrite</b> = function(e) { ... };
+<b>writer.onerror</b> = function(e) { ... };
+
+var bb = new BlobBuilder();
+bb.append('Hello World!');
+
+<b>writer.write</b>(bb.getBlob('text/plain'));
+
+}, opt_errorHandler);
+}
+
+}, opt_errorHandler);
+</pre>
+    <p class="center" style="font-size:90%">( The FileSystem API is currently only implemented in Google Chrome 9+ )</p>
+  </section>
+</div>

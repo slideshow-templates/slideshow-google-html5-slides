@@ -1,0 +1,72 @@
+<div class="slide device-access" id="slide-orientation" onload="os.onload();" onunload="os.onunload();">
+  <header><span class="js">JS</span> <h1>Device Orientation</h1></header>
+  <section>
+    <pre>
+window.addEventListener('<em>deviceorientation</em>', function(event) {
+var a = event.<b>alpha</b>;
+var b = event.<b>beta</b>;
+var g = event.<b>gamma</b>;
+}, false);
+</pre>
+  <p>This sample requires FF3.6+ or Google Chrome
+  on a device with a built in accelerometer or iOS 4.2.</p>
+  <div class="flex hbox boxcenter">
+    <div id="orientationWrap" class="noflex vbox boxcenter">
+      <div class="layer"><img src="src/orientation/chrome-layer-01.png"/></div>
+      <div class="layer"><img src="src/orientation/chrome-layer-02.png"/></div>
+      <div class="layer"><img src="src/orientation/chrome-layer-03.png"/></div>
+      <div class="layer"><img src="src/orientation/chrome-layer-04.png"/></div>
+      <div class="layer"><img src="src/orientation/chrome-layer-05.png"/></div>
+    </div>
+  </div>
+  <script defer>
+    function OrientationSlide(slide) {
+      this._slide = document.querySelector(slide);
+      this._lastBeta = 0;
+      this._lastGamma = 0;
+    }
+    OrientationSlide.prototype.orientationListener = function(evt) {
+      // For FF3.6+
+      if (!evt.gamma && !evt.beta) {
+        evt.gamma = -(evt.x * (180 / Math.PI));
+        evt.beta = -(evt.y * (180 / Math.PI));
+      }
+
+      var overThreshold = Math.abs(evt.gamma) > 4 || Math.abs(evt.beta) > 4;
+      var gamma = overThreshold ? evt.gamma : 0;
+      var beta = overThreshold ? evt.beta : 0;
+
+      if (this._lastGamma != gamma || this._lastBeta != beta) {
+        var zindex = 0;
+        var layers = document.querySelectorAll('.layer');
+        for (var i = 0, elem; elem = layers[i]; ++i) {
+          zindex++;
+          var x = Math.round(1.5 * gamma * zindex);
+          var y = Math.round(1.5 * beta * zindex);
+          var style = elem.style;
+          style.left = x.toString() + 'px';
+          style.top = y.toString() + 'px';
+          style.webkitTransform = 'rotateY(' + (-2.0 * gamma) + 'deg) rotateX(' + (-2.0 * beta) + 'deg)';
+          style.MozTransform = 'rotateY(' + (-2.0 * gamma) + 'deg) rotateX(' + (-2.0 * beta) + 'deg)';
+        }
+        this._lastGamma = gamma;
+        this._lastBeta = beta;
+      }
+    };
+    OrientationSlide.prototype.onunload = function(evt) {
+      window.removeEventListener('deviceorientation', this.orientationListener, false);
+      window.removeEventListener('MozOrientation', this.orientationListener, false);
+    };
+    OrientationSlide.prototype.onload = function(evt) {
+      window.addEventListener('deviceorientation', this.orientationListener, false);
+      window.addEventListener('MozOrientation', this.orientationListener, false);
+    };
+    var os = new OrientationSlide('#slide-orientation');
+
+    if (!('ondeviceorientation' in window) &&
+        !(window.onmozorientation)) {
+      document.querySelector('#slide-orientation p').style.display = 'block';
+    }
+  </script>
+  </section>
+</div>

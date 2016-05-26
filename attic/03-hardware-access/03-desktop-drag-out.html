@@ -1,0 +1,40 @@
+
+<div class="slide device-access" id="desktop-drag-out">
+  <header><span class="js">JS</span> <h1>Desktop Drag-Out</h1></header>
+  <section id="dnd-section">
+
+    <h3>Drag files out onto the desktop:</h3>
+
+    <pre>
+&lt;a href="src/star.mp3" draggable="true" class="dragout"
+data-downloadurl="<b>MIMETYPE:FILENAME:ABSOLUTE_URI_TO_FILE</b>"&gt;download&lt;/a&gt;
+</pre>
+
+    <pre>
+var files = document.querySelectorAll('.dragout');
+for (var i = 0, file; file = files[i]; ++i) {
+file.addEventListener('dragstart', function(e) {
+e.dataTransfer.setData('DownloadURL', this.dataset.downloadurl);
+}, false);
+}
+</pre>
+
+    <div class="example">
+      Drag each of these files onto your desktop:
+      <a href="http://static.googleusercontent.com/external_content/untrusted_dlcp/www.google.com/en/us/intl/en/landing/chrome/cadie/glasses.pdf" class="dragout" data-downloadurl="application/pdf:Chrome3DGlasses.pdf:http://static.googleusercontent.com/external_content/untrusted_dlcp/www.google.com/en/us/intl/en/landing/chrome/cadie/glasses.pdf">.pdf file</a>
+      <a href="src/star.mp3" class="dragout" data-downloadurl="audio/mpeg:star.mp3:http://slides.html5rocks.com/src/star.mp3">.mp3 file</a>
+    </div>
+    <p class="center" style="font-size:90%">( this feature is only available in Google Chrome )</p>
+    <script defer>
+      (function() {
+        var files = document.querySelectorAll('.dragout');
+        for (var i = 0, file; file = files[i]; ++i) {
+          file.setAttribute('draggable', 'true'); // Don't really need, but good practice.
+          file.addEventListener('dragstart', function(evt) {
+            evt.dataTransfer.setData('DownloadURL', this.getAttribute('data-downloadurl'));
+          }, false);
+        }
+      })();
+    </script>
+  </section>
+</div>

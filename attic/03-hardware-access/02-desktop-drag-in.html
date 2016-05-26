@@ -1,0 +1,29 @@
+<div class="slide device-access" id="desktop-drag-in">
+  <header><span class="js">JS</span> <h1>Desktop Drag-In (File API)</h1></header>
+  <section>
+<h3>Drag files in from the desktop:</h3>
+<pre>
+document.querySelector('#dropzone').addEventListener('drop', function(e) {
+var reader = new <b>FileReader</b>();
+reader.onload = function(evt) {
+document.querySelector('img').src = evt.target.<b>result</b>;
+};
+
+reader.<b>readAsDataURL</b>(e.<b>dataTransfer.files[0]</b>);
+}, false);
+</pre>
+    <div class="example">
+      <div id="dropzone" class="vbox boxcenter center">
+        Drop in images from your desktop
+      </div>
+    </div>
+    <div id="dnd-thumbnails" class="center"></div>
+
+    <script src="src/dnd/dnd-lib.js" defer></script>
+    <script defer>
+      window.addEventListener('load', function(e) {
+        var dndc = new DNDFileController('dropzone', 'dnd-thumbnails');
+      }, false);
+    </script>
+  </section>
+</div>
