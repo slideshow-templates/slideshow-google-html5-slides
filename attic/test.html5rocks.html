@@ -31,15 +31,12 @@
       </menu>
     </nav>
     <div class="slides">
-      <div id="presentation-counter">Loading...</div>
+        <div id="presentation-counter">Loading...</div>
+
         <div class="slide" id="landing-slide">
           <section class="middle">
             <p>This presentation is an HTML5 website</p>
-            <div update>This deck was last updated mid-2011. While the basics of HTML5 remain the same,
-many newer APIs are available, and a few APIs have changed during the standardization process.
-See <a href="http://html5rocks.com">HTML5 Rocks</a> for up-to-date information. <small>~February 2014</small></div>
             <p>Press <span id="left-init-key" class="key">&rarr;</span> key to advance.</p>
-            <p id="disclaimer-message">Having issues seeing the presentation? Read the <a href="disclaimer.html">disclaimer</a></p>
           </section>
           <aside class="note">
             <section>
@@ -117,16 +114,8 @@ See <a href="http://html5rocks.com">HTML5 Rocks</a> for up-to-date information. 
           </section>
         </div>
 
-  <!-- note: for now recursive include_relative will NOT work; check back again
-              include "inline/inplace" for now
-    -->
 
 {% include_relative 01-offline-storage/index.html %}
-  {% include_relative 01-offline-storage/01-web-storage.html %}
-  {% include_relative 01-offline-storage/02-web-sql-db.html %}
-  {% include_relative 01-offline-storage/03-indexed-db.html %}
-  {% include_relative 01-offline-storage/04-app-cache.html %}
-  {% include_relative 01-offline-storage/05-quota-api.html %}
 
 
         <div class="slide transitionSlide" id="realtime-title">
