@@ -6,15 +6,16 @@
   <head>
     <meta charset="utf-8">
     <title>HTML5 Presentation</title>
-    <link href="http://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans+Mono" rel="stylesheet" type="text/css" />
-    <link id="prettify-link" href="src/prettify/prettify.css" rel="stylesheet" disabled />
-    <link href="styles/fonts.css" rel="stylesheet" type="text/css" media="screen" />
-    <link href="styles/presentation.css" rel="stylesheet" type="text/css" media="screen" />
-    <link href="styles/common.css" rel="stylesheet" type="text/css" media="screen" />
-    <link class="theme" href="styles/default.css" rel="stylesheet" type="text/css" media="screen" />
-    <link class="theme" href="styles/moon.css" rel="stylesheet" type="text/css" media="screen" />
-    <link class="theme" href="styles/sand.css" rel="stylesheet" type="text/css" media="screen"/>
-    <link class="theme" href="styles/sea_wave.css" rel="stylesheet" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans+Mono">
+    <link rel="stylesheet" href="src/prettify/prettify.css" id="prettify-link" disabled>
+    <link rel="stylesheet" href="styles/fonts.css"  media="screen">
+    <link rel="stylesheet" href="styles/presentation.css" media="screen">
+    <link rel="stylesheet" href="styles/common.css"  media="screen">
+
+    <link rel="stylesheet" href="styles/themes/default.css"  class="theme" media="screen">
+    <link rel="stylesheet" href="styles/themes/moon.css"     class="theme" media="screen">
+    <link rel="stylesheet" href="styles/themes/sand.css"     class="theme" media="screen">
+    <link rel="stylesheet" href="styles/themes/sea_wave.css" class="theme" media="screen">
   </head>
   <body>
     <div id="flex-container">
@@ -209,8 +210,8 @@
           </table>
         </aside>
 
-    </div> <!-- slides -->
-    </div>
+    </div> <!-- .slides -->
+  </div> <!-- #flex-container -->
 
 
     <script src="src/prettify/prettify.js" onload="prettyPrint();" defer></script>

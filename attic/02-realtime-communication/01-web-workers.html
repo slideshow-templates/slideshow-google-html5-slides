@@ -1,0 +1,159 @@
+<div class="slide realtime-communication" id="web-workers">
+  <header><span class="js">JS</span> <h1>Web Workers</h1></header>
+  <section>
+main.js:
+<pre>
+var worker = new <b>Worker</b>('task.js');
+worker.<b>onmessage</b> = function(event) { alert(event.data); };
+worker.<b>postMessage</b>('data');
+</pre>
+task.js:
+<pre>
+self.<b>onmessage</b> = function(event) {
+// Do some work.
+self.<b>postMessage</b>("recv'd: " + event.data);
+};
+</pre>
+
+<div id="w-wrapper">
+  <div id="wmap" class="gmap example">
+    <img src="http://maps.google.com/maps/api/staticmap?center=13,13&zoom=3&size=680x200&sensor=false"/>
+  </div>
+  <div style="margin-top:5px">
+    <button id="find-route-y">Find route with Workers</button>
+    <button id="find-route-n">Find route without Workers</button>
+    <p id="w-loading">Loading Route...</p>
+  </div>
+  <p style="font-size: 90%;" class="center">Try dragging the map while the complex route is being calculated (you will only be able to do that with Workers!)</p>
+</div>
+<script src="src/webworkers/points.js" defer></script>
+<script src="src/webworkers/annealing.js" defer></script>
+<script defer>
+(function() {
+  var markersArray = [];
+  var map = null;
+  var useThreads = false;
+
+  document.querySelector('#w-wrapper').addEventListener('click', function(event) {
+    if (!map) {
+      map = new google.maps.Map(document.querySelector('#wmap'), {
+        zoom: 3,
+        center: new google.maps.LatLng(13, 13),
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      });
+      map.getDiv().style.border =  '1px solid #ccc';
+      drawPoints();
+    }
+
+    if (event.target.id == 'find-route-y') {
+      useThreads = true;
+      document.querySelector('#w-loading').style.visibility = 'visible';
+      test();
+    } else if (event.target.id == 'find-route-n'){
+      useThreads = false;
+      document.querySelector('#w-loading').style.visibility = 'visible';
+      // this setTimout is so that we see the 'loading' label
+      setTimeout(function() { test(); }, 10);
+    }
+  }, false);
+
+  function drawPath(path) {
+    var firstPoint = true;
+    var l = p1.length;
+    var scaleFactor = 5;
+    for (var i = 0; i < l - 1; ++i) {
+      var points = [
+        new google.maps.LatLng(p1[i].x / scaleFactor,
+                               p1[i].y / scaleFactor),
+        new google.maps.LatLng(p1[i + 1].x / scaleFactor,
+                               p1[i + 1].y / scaleFactor)
+      ];
+      var polyline = new google.maps.Polyline(
+          {path: points, strokeColor: '#ff0000', strokeWeight: 1});
+      markersArray.push(polyline);
+      polyline.setMap(map);
+    }
+  }
+
+  function drawPoints() {
+    var blueIcon = new google.maps.MarkerImage(
+        'src/webworkers/point.png',
+        new google.maps.Size(3, 3), // size
+        new google.maps.Point(0, 0), // origin
+        new google.maps.Point(0, 0)); // anchor
+    for (var i = 0; i < p1.length; ++i) {
+      // Render in Gmap instead of canvas
+      var point = new google.maps.LatLng(p1[i].x / 5, p1[i].y / 5);
+      var marker = new google.maps.Marker({
+          position: point, icon: blueIcon, map: map});
+      markersArray.push(marker);
+    }
+  }
+
+  function deleteOverlays() {
+    if (markersArray) {
+      for (var i in markersArray) {
+        markersArray[i].setMap(null);
+      }
+      markersArray = [];
+    }
+  }
+
+  function test() {
+    var name = "Test 1";
+    var self = this;
+    deleteOverlays();
+    drawPoints();
+    setTimeout(function() {
+      var opts = {
+        points: p1,
+        t0: 1,
+        g: 0.99,
+        stepsPerT: 10
+      };
+      var callback = {
+        name: name,
+        newMin: function(p) {
+        },
+        draw: function(p) {
+          document.querySelector('#w-loading').style.visibility = 'hidden';
+          drawPath(p);
+        }
+      };
+      var a;
+      if (useThreads) {
+        var worker = new Worker('src/webworkers/Worker.js')
+        worker.onmessage = function(event) {
+          var returnedData = JSON.parse(event.data);
+          var msg = returnedData[0];
+          var p = returnedData[1];
+          callback[msg](p);
+        };
+        worker.onerror = function(event) {
+          console.log(event);
+        };
+        worker.postMessage(JSON.stringify({
+          opts: opts,
+          width: 200,
+          height: 200
+        }));
+      } else {
+        var annealing = new Annealing();
+        var callback2 = {
+          onNewMin: function(p) {
+            // postMessage('newmin')
+          },
+          onDone: function(p) {
+            document.querySelector('#w-loading').style.visibility = 'hidden';
+            drawPath(p);
+          }
+        };
+        annealing.init(opts, opts.width, opts.height, callback2);
+        annealing.go();
+      }
+    }, 10);
+  }
+})();
+</script>
+</section>
+</div>

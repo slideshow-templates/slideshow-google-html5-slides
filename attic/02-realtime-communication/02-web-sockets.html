@@ -1,0 +1,50 @@
+<div class="slide realtime-communication" id="web-sockets">
+  <header><span class="js">JS</span> <h1>WebSocket</h1></header>
+  <section>
+<pre>var socket = new <b>WebSocket</b>('ws://html5rocks.websocket.org/echo');
+socket.<b>onopen</b> = function(event) {
+socket.<b>send</b>('Hello, WebSocket');
+};
+socket.<b>onmessage</b> = function(event) { alert(event.data); }
+socket.<b>onclose</b> = function(event) { alert('closed'); }
+</pre>
+
+    <p id="websockets-message">Full-duplex, bi-directional communication over the Web:
+    Both the server and client can send data at any time, or even at the same time.
+    Only the data itself is sent, without the overhead of HTTP headers, dramatically
+    reducing bandwidth.</p>
+
+    <div id="ws-left">
+      Use the echo demo below to test a WebSocket connection from your browser.
+      Both the message you send and the response you receive travel over the same WebSocket connection.
+
+      <div id="ws-config-location">
+        <h4>Location:</h4>
+        <input type="text" id="wsUri" disabled />
+        <br>
+        <input type="checkbox" id="wsSecureCb" onclick="wsToggleTls();" disabled />
+        <label id="wsSecureCbLabel" for="wsSecureCb">Use secure WebSocket (TLS/SSL)</label>
+        <br>
+        <button id="wsConnectBut" disabled>Connect</button>
+        <button id="wsDisconnectBut" disabled>Disconnect</button>
+      </div>
+      <div id="ws-config-message">
+        <h4>Message:</h4>
+        <input  type="text" id="wsMessage" value="Hello, WebSocket" disabled />
+        <button id="wsSendBut" disabled>Send</button>
+      </div>
+    </div>
+    <div id="ws-right">
+      <div id="ws-log">
+        <strong>Output:</strong>
+        <div id="wsConsoleLog"></div>
+        <button id="wsClearLogBut">Clear log</button>
+      </div>
+    </div>
+    <div id="ws-powered">
+      Demo powered by <a href="http://kaazing.com" target="_blank"><img id="wsKaazingLogo" src="src/websocket/kaazing-logo_99x16.png" width="99" height="16" alt="Powered by Kaazing" /></a>
+    </div>
+
+  </section>
+  <script src="src/websocket/websocket.js" defer></script>
+</div>
