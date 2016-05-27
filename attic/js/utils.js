@@ -1,28 +1,3 @@
-// bind polyfill
-if (!Function.prototype.bind) {
-  Function.prototype.bind = function (oThis) {
-    if (typeof this !== "function") {
-      // closest thing possible to the ECMAScript 5 internal IsCallable function
-      throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
-    }
-
-    var fSlice = Array.prototype.slice,
-        aArgs = fSlice.call(arguments, 1), 
-        fToBind = this, 
-        fNOP = function () {},
-        fBound = function () {
-          return fToBind.apply(this instanceof fNOP
-                                 ? this
-                                 : oThis || window,
-                               aArgs.concat(fSlice.call(arguments)));
-        };
-
-    fNOP.prototype = this.prototype;
-    fBound.prototype = new fNOP();
-
-    return fBound;
-  };
-}
 
 (function() {
   var doc = document;
@@ -389,11 +364,11 @@ if (!Function.prototype.bind) {
       if (elem && elem.className != 'slides') {
         this._presentationCounter.textContent = currentIndex;
         if (this._menuCounter) {
-          this._menuCounter.textContent = currentIndex;          
+          this._menuCounter.textContent = currentIndex;
         }
       }
       if (this._speakerNote) {
-        this._speakerNote.innerHTML = this._slides[currentIndex - 1].getSpeakerNote();        
+        this._speakerNote.innerHTML = this._slides[currentIndex - 1].getSpeakerNote();
       }
       if (history.pushState) {
         if (!dontPush) {
@@ -531,11 +506,11 @@ if (!Function.prototype.bind) {
 
   // disable style theme stylesheets
   var linkEls = queryAll('link.theme');
-  var stylesheetPath = sessionStorage['theme'] || 'styles/default.css';
+  var stylesheetPath = sessionStorage['theme'] || 'styles/themes/default.css';
   linkEls.forEach(function(stylesheet) {
     stylesheet.disabled = !(stylesheet.href.indexOf(stylesheetPath) != -1);
   });
-        
+
   // Initialize
   var li_array = [];
   var transitionSlides = queryAll('.transitionSlide').forEach(function(el) {
@@ -547,7 +522,7 @@ if (!Function.prototype.bind) {
   });
 
   var slideshow = new SlideShow(queryAll('.slide'));
-  
+
   document.addEventListener('DOMContentLoaded', function() {
     query('.slides').style.display = 'block';
   }, false);
@@ -564,5 +539,5 @@ if (!Function.prototype.bind) {
 
   queryAll('pre').forEach(function(el) {
     addClass(el, 'prettyprint');
-  });    
+  });
 })();

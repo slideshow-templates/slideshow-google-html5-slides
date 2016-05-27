@@ -41,6 +41,7 @@ Slightly edited / changed.
 - Removed app manifest (machinery).
 - Removed Google Analytics tracker.
 - Moved media files to slideshow-templates/media repo.
+- in js/utils.js remove Function.bind pollyfill
 - ...
 
 
