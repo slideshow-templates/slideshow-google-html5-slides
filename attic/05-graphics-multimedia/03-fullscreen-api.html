@@ -1,0 +1,112 @@
+<div class="slide" id="fullscreen-api">
+  <header><span class="css">CSS</span> <span class="js">JS</span> <h1>FullScreen API</h1></header>
+  <style>
+    :-webkit-full-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      box-sizing: border-box;
+      margin: 0;
+      width: 100%;
+      height: 100%;
+    }
+    :-webkit-full-screen-ancestor:root {
+      overflow: hidden;
+    }
+    :-webkit-full-screen-ancestor {
+      z-index: auto;
+      opacity: 1;
+      mask: none;
+      clip: auto;
+      filter: none;
+      -webkit-transform: none;
+      -webkit-transition: none;
+    }
+    pre:-webkit-full-screen {
+      background-color: white;
+    }
+    pre:-webkit-full-screen:after {
+      content: 'Only one element can be targeted for full screen';
+    }
+    .tohide {
+      display: none;
+    }
+    :-webkit-full-screen .tohide {
+      display: block;
+    }
+  </style>
+  <section>
+    <pre id="snippet">if (elem.<b>webkitRequestFullScreen</b>) {
+elem.<b>webkitRequestFullScreen</b>(Element.<em>ALLOW_KEYBOARD_INPUT</em>);
+} else if (elem.<b>mozRequestFullScreen</b>) {
+elem.<b>mozRequestFullScreen</b>();
+} else if (elem.<b>requestFullScreen</b>){
+elem.<b>requestFullScreen</b>();
+}
+</pre>
+<pre><b>:-webkit-full-screen-ancestor</b>:root {
+overflow: hidden;
+}
+<b>:-webkit-full-screen-ancestor</b> {
+z-index: auto;
+-webkit-transform: none;
+-webkit-transition: none;
+}
+pre<b>:-webkit-full-screen</b> {
+background-color: white;
+}
+</pre>
+
+<div id="fs">
+  <button id="slide-fs">Toggle slide fullscreen</button>
+  <button id="snippet-fs">Toggle snippet fullscreen</button>
+  <div class="tohide"><small>close: 'ENTER' or 'ESC'</small></div>
+</div>
+
+</section>
+
+<script>
+document.cancelFullScreen = document.webkitCancelFullScreen || document.mozCancelFullScreen || document.exitFullscreen;
+
+document.addEventListener('keydown', function(e) {
+  switch (e.keyCode) {
+    case 13: // ENTER. ESC should also take you out of fullscreen by default.
+      e.preventDefault();
+      document.cancelFullScreen();
+      break;
+  }
+}, false);
+
+function doFullScreen(elem) {
+  if (elem.webkitRequestFullScreen) {
+    elem.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+  } else if (elem.mozRequestFullScreen) {
+    elem.mozRequestFullScreen();
+  } else if (elem.requestFullScreen){
+    elem.requestFullScreen();
+  }
+}
+
+function onFullScreenChange() {
+  console.log("fullscreen change!");
+};
+
+
+function enterFullscreen(elem) {
+  var elem = elem || document.body;
+  elem.onwebkitfullscreenchange = onFullScreenChange;
+  elem.onmozfullscreenchange = onFullScreenChange;
+  elem.onfullscreenchange = onFullScreenChange;
+  if (document.webkitIsFullScreen) {
+    document.cancelFullScreen();
+  } else {
+    doFullScreen(elem);
+  }
+}
+
+document.getElementById('slide-fs').onclick = function(e) { enterFullscreen(document.querySelector('.current')) };
+document.getElementById('snippet-fs').onclick = function(e) { enterFullscreen(document.querySelector('#snippet')) };
+</script>
+</div>

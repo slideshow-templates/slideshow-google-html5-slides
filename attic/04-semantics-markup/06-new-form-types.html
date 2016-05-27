@@ -1,0 +1,37 @@
+<div class="slide semantics" id="new-form-types">
+  <header><span class="html">HTML</span> <h1>New form types</h1></header>
+
+  <section>
+    <pre>
+&lt;style&gt;
+[required] {
+border-color: #88a;
+-webkit-box-shadow: 0 0 3px rgba(0, 0, 255, .5);
+}
+:invalid {
+border-color: #e88;
+-webkit-box-shadow: 0 0 5px rgba(255, 0, 0, .8);
+}
+&lt;/style&gt;
+</pre>
+<pre class="form-inputs">
+<input type="text" required />&lt;input type="text" <b>required</b> /&gt;
+
+<input type="email" value="some@email.com" />&lt;input type="<b>email</b>" value="some@email.com" /&gt;
+
+<input type="date" min="2010-08-14" max="2011-08-14" value="2010-08-14" />&lt;input type="<b>date</b>" <b>min</b>="2010-08-14" <b>max</b>="2011-08-14" value="2010-08-14"/&gt;
+
+<input type="range" min="0" max="50" value="10" />&lt;input type="<b>range</b>" <b>min</b>="0" <b>max</b>="50" value="10" /&gt;
+
+<input results="10" type="search" placeholder="Search..." />&lt;input type="<b>search</b>" <b>results</b>="10" <b>placeholder</b>="Search..." /&gt;
+
+<input type="tel" placeholder="(555) 555-5555" pattern="^\(?\d{3}\)?[-\s]\d{3}[-\s]\d{4}.*?$" />&lt;input type="<b>tel</b>"  <b>placeholder</b>="(555) 555-5555"
+ <b>pattern</b>="^\(?\d{3}\)?[-\s]\d{3}[-\s]\d{4}.*?$" /&gt;
+
+<input type="color" placeholder="e.g. #bbbbbb" />&lt;input type="<b>color</b>" <b>placeholder</b>="e.g. #bbbbbb" /&gt;
+
+<input type="number" step="1" min="-5" max="10" value="0" />&lt;input type="<b>number</b>" <b>step</b>="1" <b>min</b>="-5" <b>max</b>="10" value="0" /&gt;
+<div style="height:0px; clear:both;">
+</pre>
+  </section>
+</div>

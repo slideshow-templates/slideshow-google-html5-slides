@@ -1,0 +1,29 @@
+<div class="slide effects" id="canvas-2d">
+  <header><span class="html">HTML</span> <span class="js">JS</span> <h1>Canvas 2D</h1></header>
+  <section>
+    <pre>&lt;canvas id="canvas" width="838" height="220"&gt;&lt;/canvas&gt;
+
+&lt;script&gt;
+var canvasContext = document.getElementById("canvas").<b>getContext</b>("2d");
+canvasContext.<b>fillRect</b>(250, 25, 150, 100);
+
+canvasContext.<b>beginPath</b>();
+canvasContext.<b>arc</b>(450, 110, 100, Math.PI * 1/2, Math.PI * 3/2);
+canvasContext.<b>lineWidth</b> = 15;
+canvasContext.<b>lineCap</b> = 'round';
+canvasContext.<b>strokeStyle</b> = 'rgba(255, 127, 0, 0.5)';
+canvasContext.<b>stroke</b>();
+&lt;/script&gt;</pre>
+    <canvas id="canvas-area" width="838" height="225"></canvas>
+    <script defer>
+      var canvasContext = document.getElementById("canvas-area").getContext("2d");
+      canvasContext.fillRect(250, 25, 150, 100);
+      canvasContext.beginPath();
+      canvasContext.arc(450, 110, 100, Math.PI * 1/2, Math.PI * 3/2, false);
+      canvasContext.lineWidth = 15;
+      canvasContext.lineCap = 'round';
+      canvasContext.strokeStyle = 'rgba(255, 127, 0, 0.5)';
+      canvasContext.stroke();
+    </script>
+  </section>
+</div>
